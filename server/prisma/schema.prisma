@@ -18,12 +18,13 @@ model User {
   lName     String
   email     String   @unique
   username  String   @unique
-  password  String
-  avatar    String
-  bio       String
-  githubId  String   @unique
+  password  String?
+  avatar    String?
+  bio       String?
+  githubId  String?   @unique
   createdAt DateTime @default(now())
   posts     Post[]
+  likes     Like[]
 }
 
 model Post {
@@ -33,4 +34,15 @@ model Post {
   authorId  Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  likes     Like[]
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  postId    Int
+  userId    Int
+  createdAt DateTime @default(now())
+  @@unique([userId, postId])
 }
