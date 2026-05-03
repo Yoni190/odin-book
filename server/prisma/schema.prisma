@@ -20,8 +20,8 @@ enum Status {
 
 model User {
   id               Int             @id @default(autoincrement())
-  fName            String
-  lName            String
+  fName            String?
+  lName            String?
   email            String          @unique
   username         String          @unique
   password         String?
