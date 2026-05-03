@@ -34,6 +34,8 @@ model User {
   comments         Comment[]
   sentRequests     FollowRequest[] @relation("SentRequests")
   receivedRequests FollowRequest[] @relation("ReceivedRequests")
+  followers        Follow[]        @relation("Followers")
+  followings       Follow[]        @relation("Followings")
 }
 
 model Post {
@@ -76,6 +78,17 @@ model FollowRequest {
   followerId  Int
   followingId Int
   status      Status   @default(PENDING)
+  createdAt   DateTime @default(now())
+
+  @@unique([followerId, followingId])
+}
+
+model Follow {
+  id          Int      @id @default(autoincrement())
+  follower    User     @relation("Followers", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User     @relation("Followings", fields: [followingId], references: [id], onDelete: Cascade)
+  followerId  Int
+  followingId Int
   createdAt   DateTime @default(now())
 
   @@unique([followerId, followingId])
