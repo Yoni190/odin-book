@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken')
-require('dotenv').config()
+import jwt from 'jsonwebtoken'
+import 'dotenv/config'
 
 export const signAccessToken = (userId) => {
     jwt.sign({ id: userId }, process.env.ACCESS_TOKEN_SECRET, {
