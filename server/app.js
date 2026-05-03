@@ -1,13 +1,16 @@
 const express = require('express')
 const cors = require('cors')
 require('dotenv').config()
-const {prisma} = require('./lib/prisma')
+const routes = require('./routes/index')
+const passport = require('./config/passport')
+
 
 const app = express()
 
 app.use(express.json())
 app.use(cors())
 
+app.use('/auth', routes.authRoute)
 
 const PORT = process.env.PORT
 
