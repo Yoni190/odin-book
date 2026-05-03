@@ -1,22 +1,23 @@
 import jwt from 'jsonwebtoken'
-import 'dotenv/config'
+import dotenv from 'dotenv'
+dotenv.config()
 
 export const signAccessToken = (userId) => {
-    jwt.sign({ id: userId }, process.env.ACCESS_TOKEN_SECRET, {
+    return jwt.sign({ id: userId }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: process.env.ACCESS_TOKEN_EXPIRES
     })
 }
 
 export const signRefreshToken = (userId) => {
-    jwt.sign({ id: userId }, process.env.REFRESH_TOKEN_SECRET, {
+    return jwt.sign({ id: userId }, process.env.REFRESH_TOKEN_SECRET, {
         expiresIn: process.env.REFRESH_TOKEN_EXPIRES
     })
 }
 
 export const verifyAccessToken = (token) => {
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
+    return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
 }
 
 export const verifyRefreshToken = (token) => {
-    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET)
+    return jwt.verify(token, process.env.REFRESH_TOKEN_SECRET)
 }
