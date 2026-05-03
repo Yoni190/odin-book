@@ -19,5 +19,8 @@ model User {
   email     String   @unique
   username  String   @unique
   password  String
+  avatar    String
+  bio       String
+  githubId  String   @unique
   createdAt DateTime @default(now())
 }
