@@ -28,36 +28,36 @@ passport.use(new LocalStrategy(
     }
 ))
 
-passport.use(new GitHubStrategy(
-    {
-        clientID: process.env.GITHUB_CLIENT_ID,
-        clientSecret: process.env.GITHUB_CLIENT_SECRET,
-        callbackURL: '/auth/github/callback'
-    },
-    async (accessToken, refreshToken, profile, done) => {
-        try {
-            let user = await prisma.user.findUnique({
-                where: { githubId: profile.id }
-            })
+// passport.use(new GitHubStrategy(
+//     {
+//         clientID: process.env.GITHUB_CLIENT_ID,
+//         clientSecret: process.env.GITHUB_CLIENT_SECRET,
+//         callbackURL: '/auth/github/callback'
+//     },
+//     async (accessToken, refreshToken, profile, done) => {
+//         try {
+//             let user = await prisma.user.findUnique({
+//                 where: { githubId: profile.id }
+//             })
 
-            if(!user) {
-                user = await prisma.user.create({
-                    data: {
-                        githubId: profile.id,
-                        email: profile.emails?.[0]?.value,
-                        username: profile.username ?? `github_${profile.id}`,
-                        fName: profile.displayName?.split(' ')[0] ?? profile.username,
-                        lName: profile.displayName?.split(' ')[1] ?? '',
-                        avatar: profile.photos?.[0]?.value
-                    }
-                })
-            }
+//             if(!user) {
+//                 user = await prisma.user.create({
+//                     data: {
+//                         githubId: profile.id,
+//                         email: profile.emails?.[0]?.value,
+//                         username: profile.username ?? `github_${profile.id}`,
+//                         fName: profile.displayName?.split(' ')[0] ?? profile.username,
+//                         lName: profile.displayName?.split(' ')[1] ?? '',
+//                         avatar: profile.photos?.[0]?.value
+//                     }
+//                 })
+//             }
 
-            return done(null, user)
-        } catch (error) {
-            return done(error)
-        }
-    }
-))
+//             return done(null, user)
+//         } catch (error) {
+//             return done(error)
+//         }
+//     }
+// ))
 
 module.exports = passport
