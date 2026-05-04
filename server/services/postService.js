@@ -43,7 +43,7 @@ const createPost = async (content, authorId) => {
 }
 
 const editPost = async (content, id, authorId) => {
-    const post = await prisma.post.findUnique({ where: { id} })
+    const post = await prisma.post.findUnique({ where: { id } })
 
     if(!post) throw new NotFoundError('Post not found')
     if(post.authorId !== authorId) throw new ForbiddenError('Unauthorized access')
@@ -57,8 +57,13 @@ const editPost = async (content, id, authorId) => {
 }
 
 const deletePost = async (id, authorId) => {
+    const post = await prisma.post.findUnique({ where: { id } })
+
+    if(!post) throw new NotFoundError('Post not found')
+    if(post.authorId !== authorId) throw new ForbiddenError('Unauthorized access')
+    
     await prisma.post.delete({
-        where: { id, authorId}
+        where: { id }
     })
 }
 
