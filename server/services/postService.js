@@ -38,8 +38,17 @@ const createPost = async (content, authorId) => {
     })
 }
 
+const editPost = async (content, id, authorId) => {
+    await prisma.post.update({
+        where: { id, authorId },
+        data: {
+            content
+        }
+    })
+}
 module.exports = {
     fetchPosts,
     fetchPost,
-    createPost
+    createPost,
+    editPost
 }

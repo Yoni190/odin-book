@@ -1,4 +1,4 @@
-const { fetchPosts, fetchPost, createPost } = require('../services/postService')
+const { fetchPosts, fetchPost, createPost, editPost } = require('../services/postService')
 
 const index = async (req, res) => {
     try {
@@ -34,8 +34,23 @@ const store = async (req, res) => {
     }
 }
 
+const update = async (req, res) => {
+    const { content } = req.body
+    const id = parseInt(req.params.id)
+    const authorId = req.user.id
+
+    try {
+        await editPost(content, id, authorId)
+
+        return res.json({ message: 'Post edited successfully' })
+    } catch (error) {
+        return res.status(500).json({ error: 'Something went wrong' })
+    }
+}
+
 module.exports = {
     index,
     post,
-    store
+    store,
+    update
 }
