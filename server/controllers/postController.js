@@ -15,6 +15,8 @@ const post = async (req, res) => {
     try {
         const post = await fetchPost(id)
 
+        if(!post) return res.status(404).json({ error: 'Post not found' })
+
         return res.json({ post })
     } catch (error) {
         return res.status(500).json({ error: 'Something went wrong' })
