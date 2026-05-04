@@ -1,4 +1,4 @@
-const { fetchPosts } = require('../services/postService')
+const { fetchPosts, fetchPost } = require('../services/postService')
 
 const index = async (req, res) => {
     try {
@@ -10,6 +10,18 @@ const index = async (req, res) => {
     }
 }
 
+const post = async (req, res) => {
+    const id = parseInt(req.params.id)
+    try {
+        const post = await fetchPost(id)
+
+        return res.json({ post })
+    } catch (error) {
+        return res.status(500).json({ error: 'Something went wrong' })
+    }
+}
+
 module.exports = {
-    index
+    index,
+    post
 }

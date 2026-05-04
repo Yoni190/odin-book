@@ -6,6 +6,15 @@ const fetchPosts = async () => {
     return posts
 }
 
+const fetchPost = async (id) => {
+    const post = await prisma.post.findUnique({
+        where: { id }
+    })
+
+    return post
+}
+
 module.exports = {
-    fetchPosts
+    fetchPosts,
+    fetchPost
 }
