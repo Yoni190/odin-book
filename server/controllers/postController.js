@@ -26,9 +26,9 @@ const store = async (req, res) => {
     const authorId = req.user.id
 
     try {
-        await createPost(content, authorId)
+        const post = await createPost(content, authorId)
 
-        return res.json({ message: 'Post created successfully' })
+        return res.status(201).json({ post })
     } catch (error) {
         return res.status(500).json({ error: 'Something went wrong' })
     }

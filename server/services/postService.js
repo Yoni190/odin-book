@@ -30,12 +30,14 @@ const fetchPost = async (id) => {
 }
 
 const createPost = async (content, authorId) => {
-    await prisma.post.create({
+    const post = await prisma.post.create({
         data: {
             content,
             authorId
         }
     })
+
+    return post
 }
 
 const editPost = async (content, id, authorId) => {
