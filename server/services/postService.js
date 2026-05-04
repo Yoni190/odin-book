@@ -1,14 +1,29 @@
 const { prisma } = require('../lib/prisma')
 
 const fetchPosts = async () => {
-    const posts = await prisma.post.findMany({})
+    const posts = await prisma.post.findMany({
+        include: {
+            author: {
+                select: {
+                    username: true
+                }
+            }
+        }
+    })
 
     return posts
 }
 
 const fetchPost = async (id) => {
     const post = await prisma.post.findUnique({
-        where: { id }
+        where: { id },
+        include: {
+            author: {
+                select: {
+                    username: true
+                }
+            }
+        }
     })
 
     return post
