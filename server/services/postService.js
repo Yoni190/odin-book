@@ -1,4 +1,6 @@
+const { NotFoundError, ForbiddenError } = require('../lib/errors')
 const { prisma } = require('../lib/prisma')
+
 
 const fetchPosts = async () => {
     const posts = await prisma.post.findMany({
@@ -41,8 +43,13 @@ const createPost = async (content, authorId) => {
 }
 
 const editPost = async (content, id, authorId) => {
+    const post = await prisma.post.findUnique({ where: { id} })
+
+    if(!post) throw new NotFoundError('Post not found')
+    if(post.authorId !== authorId) throw new ForbiddenError('Unauthorized access')
+    
     await prisma.post.update({
-        where: { id, authorId },
+        where: { id },
         data: {
             content
         }

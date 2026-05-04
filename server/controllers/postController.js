@@ -1,4 +1,6 @@
+const { NotFoundError, ForbiddenError } = require('../lib/errors')
 const { fetchPosts, fetchPost, createPost, editPost, deletePost } = require('../services/postService')
+
 
 const index = async (req, res) => {
     try {
@@ -46,6 +48,9 @@ const update = async (req, res) => {
 
         return res.json({ message: 'Post edited successfully' })
     } catch (error) {
+        if(error instanceof NotFoundError || error instanceof ForbiddenError) {
+            return res.status(error.statusCode).json({ error: error.message })
+        }
         return res.status(500).json({ error: 'Something went wrong' })
     }
 }
