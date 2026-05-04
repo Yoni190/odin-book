@@ -6,6 +6,7 @@ const router = Router()
 
 router.get('/', authenticate, postController.index)
 router.get('/:id', authenticate, postController.post)
+router.post('/', authenticate, postController.store)
 
 
 module.exports = router
