@@ -13,6 +13,7 @@ app.use(cors())
 app.use(cookieParser())
 
 app.use('/auth', routes.authRoute)
+app.use('/posts', routes.postRoute)
 
 const PORT = process.env.PORT
 
