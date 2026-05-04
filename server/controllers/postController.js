@@ -1,4 +1,4 @@
-const { fetchPosts, fetchPost } = require('../services/postService')
+const { fetchPosts, fetchPost, createPost } = require('../services/postService')
 
 const index = async (req, res) => {
     try {
@@ -21,7 +21,21 @@ const post = async (req, res) => {
     }
 }
 
+const store = async (req, res) => {
+    const { content } = req.body
+    const authorId = req.user.id
+
+    try {
+        await createPost(content, authorId)
+
+        return res.json({ message: 'Post created successfully' })
+    } catch (error) {
+        return res.status(500).json({ error: 'Something went wrong' })
+    }
+}
+
 module.exports = {
     index,
-    post
+    post,
+    store
 }

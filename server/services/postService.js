@@ -14,7 +14,17 @@ const fetchPost = async (id) => {
     return post
 }
 
+const createPost = async (content, authorId) => {
+    await prisma.post.create({
+        data: {
+            content,
+            authorId
+        }
+    })
+}
+
 module.exports = {
     fetchPosts,
-    fetchPost
+    fetchPost,
+    createPost
 }
