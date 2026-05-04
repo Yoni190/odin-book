@@ -1,4 +1,4 @@
-const { fetchPosts, fetchPost, createPost, editPost } = require('../services/postService')
+const { fetchPosts, fetchPost, createPost, editPost, deletePost } = require('../services/postService')
 
 const index = async (req, res) => {
     try {
@@ -48,9 +48,23 @@ const update = async (req, res) => {
     }
 }
 
+const destroy = async (req, res) => {
+    const id = parseInt(req.params.id)
+    const authorId = req.user.id
+
+    try {
+        await deletePost(id, authorId)
+
+        return res.json({ message: 'Post deleted successfully' })
+    } catch (error) {
+        return res.status(500).json({ error: 'Something went wrong' })
+    }
+}
+
 module.exports = {
     index,
     post,
     store,
-    update
+    update,
+    destroy
 }

@@ -46,9 +46,18 @@ const editPost = async (content, id, authorId) => {
         }
     })
 }
+
+const deletePost = async (id, authorId) => {
+    await prisma.post.delete({
+        where: { id, authorId}
+    })
+}
+
+
 module.exports = {
     fetchPosts,
     fetchPost,
     createPost,
-    editPost
+    editPost,
+    deletePost
 }
