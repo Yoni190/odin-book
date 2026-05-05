@@ -33,7 +33,25 @@ const createLike = async (postId, userId) => {
     return like
 }
 
+const deleteLike = async (postId, userId) => {
+    const like = await prisma.like.findUnique({
+        where: {
+            userId_postId: { userId, postId }
+        }
+    })
+
+
+    if(!like) throw new NotFoundError('Like not found')
+
+    await prisma.like.delete({
+        where: {
+            userId_postId: { userId, postId }
+        }
+    })
+}
+
 module.exports = {
     fetchLikes,
-    createLike
+    createLike,
+    deleteLike
 }
