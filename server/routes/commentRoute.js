@@ -7,6 +7,7 @@ const router = Router()
 
 router.get('/:id/comments', authenticate, commentController.index)
 router.post('/:id/comments', authenticate, commentController.store)
+router.delete('/:commentId', authenticate, commentController.destroy)
 
 
 module.exports = router

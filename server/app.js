@@ -16,6 +16,7 @@ app.use('/auth', routes.authRoute)
 app.use('/posts', routes.postRoute)
 app.use('/posts', routes.likeRoute)
 app.use('/posts', routes.commentRoute)
+app.use('/comments', routes.commentRoute)
 
 const PORT = process.env.PORT
 
