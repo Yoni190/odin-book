@@ -14,6 +14,7 @@ app.use(cookieParser())
 
 app.use('/auth', routes.authRoute)
 app.use('/posts', routes.postRoute)
+app.use('/posts', routes.likeRoute)
 
 const PORT = process.env.PORT
 
