@@ -1,5 +1,5 @@
 const { NotFoundError } = require("../lib/errors")
-const { fetchComments, createComment } = require("../services/commentService")
+const { fetchComments, createComment, deleteComment } = require("../services/commentService")
 
 
 
@@ -37,7 +37,24 @@ const store = async (req, res) => {
     }
 }
 
+const destroy = async (req, res) => {
+    const commentId = parseInt(req.params.commentId)
+    const userId = req.user.id
+
+    try {
+        await deleteComment(commentId, userId)
+
+        return res.sendStatus(204)
+    } catch (error) {
+        if(error instanceof NotFoundError) {
+            return res.status(error.statusCode).json({ error: error.message })
+        }
+
+        return res.status(500).json({ error: 'Something went wrong' })
+    }
+}
 module.exports = {
     index,
-    store
+    store,
+    destroy
 }

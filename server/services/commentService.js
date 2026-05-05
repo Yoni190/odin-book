@@ -1,4 +1,4 @@
-const { NotFoundError } = require("../lib/errors");
+const { NotFoundError, ForbiddenError } = require("../lib/errors");
 const { prisma } = require("../lib/prisma");
 
 
@@ -34,8 +34,21 @@ const createComment = async(postId, userId, content) => {
     return comment
 }
 
+const deleteComment = async (commentId, userId) => {
+    const comment = await prisma.comment.findUnique({
+        where: { id: commentId }
+    })
+
+    if(!comment) throw new NotFoundError('Comment not found')
+    if(comment.userId !== userId) throw new ForbiddenError('Unauthorized access')
+    
+    await prisma.comment.delete({
+        where: { id: commentId }
+    })
+}
 
 module.exports = {
     fetchComments,
-    createComment
+    createComment,
+    deleteComment
 }
