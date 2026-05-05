@@ -1,12 +1,12 @@
 const { NotFoundError } = require("../lib/errors")
-const { fetchLikes } = require("../services/likeService")
+const { fetchLikes, createLike } = require("../services/likeService")
 
 
 const index = async (req, res) => {
-    const id = parseInt(req.params.id)
+    const postId = parseInt(req.params.id)
 
     try {
-        const likes = await fetchLikes(id)
+        const likes = await fetchLikes(postId)
 
         return res.json({ likes })
     } catch (error) {
@@ -18,6 +18,24 @@ const index = async (req, res) => {
     }
 }
 
+const store = async (req, res) => {
+    const postId = parseInt(req.params.id)
+    const userId = req.user.id
+
+    try {
+        const like = await createLike(postId, userId)
+
+        return res.status(201).json({ like })
+    } catch (error) {
+        if(error instanceof NotFoundError) {
+            return res.status(error.statusCode).json({ error: error.message })
+        }
+
+        return res.status(500).json({ error: 'Something went wrong' })
+    }
+}
+
 module.exports = {
-    index
+    index,
+    store
 }

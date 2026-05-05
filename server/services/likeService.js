@@ -16,6 +16,24 @@ const fetchLikes = async (postId) => {
     return likes
 }
 
+const createLike = async (postId, userId) => {
+    const post = await prisma.post.findUnique({
+        where: { id: postId }
+    })
+
+    if(!post) throw new NotFoundError('Post not found')
+    
+    const like = await prisma.like.create({
+        data: {
+            postId,
+            userId
+        }
+    })
+
+    return like
+}
+
 module.exports = {
-    fetchLikes
+    fetchLikes,
+    createLike
 }
