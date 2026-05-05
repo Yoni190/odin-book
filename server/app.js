@@ -18,6 +18,8 @@ app.use('/posts', routes.likeRoute)
 app.use('/posts', routes.commentRoute)
 app.use('/comments', routes.commentRoute)
 
+app.use('/profile', routes.profileRoute)
+
 const PORT = process.env.PORT
 
 app.listen(PORT, (error) => {
