@@ -19,6 +19,7 @@ app.use('/posts', routes.commentRoute)
 app.use('/comments', routes.commentRoute)
 
 app.use('/profile', routes.profileRoute)
+app.use('/follows', routes.followRoute)
 
 const PORT = process.env.PORT
 
