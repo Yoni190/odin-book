@@ -1,4 +1,6 @@
+const { InvalidDataError } = require("../lib/errors");
 const { prisma } = require("../lib/prisma");
+
 
 const fetchUserInfo = async (userId) => {
     const user = await prisma.user.findUnique({
@@ -13,10 +15,8 @@ const editUserInfo = async (userId, username, email, fName, lName) => {
         where: { username }
     })
 
-    if(user) throw new Error('Username already taken')
+    if(user) throw new InvalidDataError('Username already taken')
 
-
-    console.log(username)
 
     const updatedUser = await prisma.user.update({
         where: { id: userId },
@@ -24,6 +24,7 @@ const editUserInfo = async (userId, username, email, fName, lName) => {
             username, email, fName, lName
         }
     })
+
 
     return updatedUser
 }
