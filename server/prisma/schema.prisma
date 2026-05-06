@@ -12,30 +12,22 @@ datasource db {
   provider = "postgresql"
 }
 
-enum Status {
-  PENDING
-  ACCEPTED
-  REJECTED
-}
-
 model User {
-  id               Int             @id @default(autoincrement())
-  fName            String?
-  lName            String?
-  email            String          @unique
-  username         String          @unique
-  password         String?
-  avatar           String?
-  bio              String?
-  githubId         String?         @unique
-  createdAt        DateTime        @default(now())
-  posts            Post[]
-  likes            Like[]
-  comments         Comment[]
-  sentRequests     FollowRequest[] @relation("SentRequests")
-  receivedRequests FollowRequest[] @relation("ReceivedRequests")
-  followers        Follow[]        @relation("Followers")
-  followings       Follow[]        @relation("Followings")
+  id         Int       @id @default(autoincrement())
+  fName      String?
+  lName      String?
+  email      String    @unique
+  username   String    @unique
+  password   String?
+  avatar     String?
+  bio        String?
+  githubId   String?   @unique
+  createdAt  DateTime  @default(now())
+  posts      Post[]
+  likes      Like[]
+  comments   Comment[]
+  followers  Follow[]  @relation("Followers")
+  followings Follow[]  @relation("Followings")
 }
 
 model Post {
@@ -71,25 +63,22 @@ model Comment {
   updatedAt DateTime @updatedAt
 }
 
-model FollowRequest {
-  id          Int      @id @default(autoincrement())
-  follower    User     @relation("SentRequests", fields: [followerId], references: [id], onDelete: Cascade)
-  following   User     @relation("ReceivedRequests", fields: [followingId], references: [id], onDelete: Cascade)
+model Follow {
+  id          Int          @id @default(autoincrement())
+  follower    User         @relation("Followers", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User         @relation("Followings", fields: [followingId], references: [id], onDelete: Cascade)
   followerId  Int
   followingId Int
-  status      Status   @default(PENDING)
-  createdAt   DateTime @default(now())
+  status      FollowStatus @default(PENDING)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 
   @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
 }
 
-model Follow {
-  id          Int      @id @default(autoincrement())
-  follower    User     @relation("Followers", fields: [followerId], references: [id], onDelete: Cascade)
-  following   User     @relation("Followings", fields: [followingId], references: [id], onDelete: Cascade)
-  followerId  Int
-  followingId Int
-  createdAt   DateTime @default(now())
-
-  @@unique([followerId, followingId])
+enum FollowStatus {
+  PENDING
+  ACCEPTED
 }
