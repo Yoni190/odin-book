@@ -8,5 +8,6 @@ const router = Router()
 
 router.get('/', authenticate, followController.index)
 router.post('/:id', authenticate, followController.store)
+router.delete('/:id', authenticate, followController.destroy)
 
 module.exports = router
