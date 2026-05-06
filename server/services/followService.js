@@ -26,7 +26,24 @@ const createFollow = async (followerId, followingId) => {
     return follow
 }
 
+const deleteFollow = async (followerId, followingId) => {
+    const user = await prisma.user.findUnique({
+        where: { id: followingId }
+    })
+
+    if(!user) throw new NotFoundError('User not found')
+    
+    await prisma.follow.delete({
+        where: {
+            followerId_followingId: {
+                followerId, followingId
+            }
+        }
+    })
+}
+
 module.exports = {
     fetchUserFollows,
-    createFollow
+    createFollow,
+    deleteFollow
 }
