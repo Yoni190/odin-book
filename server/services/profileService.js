@@ -4,7 +4,17 @@ const { prisma } = require("../lib/prisma");
 
 const fetchUserInfo = async (userId) => {
     const user = await prisma.user.findUnique({
-        where: { id: userId }
+        where: { id: userId },
+        select: {
+            id: true,
+            fName: true,
+            lName: true,
+            email: true,
+            username: true,
+            avatar: true,
+            bio: true,
+            createdAt: true
+        }
     })
 
     return user
