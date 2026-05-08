@@ -55,8 +55,20 @@ const destroy = async (req, res) => {
 }
 
 
+const getUserFollowers = async (req, res) => {
+    const userId = parseInt(req.params.id)
+    try {
+        const follows = await fetchUserFollows(userId)
+
+        return res.json({ follows })
+    } catch (error) {
+        return res.status(500).json({ error: 'Something went wrong' })
+    }
+}
+
 module.exports = {
     index,
     store,
-    destroy
+    destroy,
+    getUserFollowers
 }
