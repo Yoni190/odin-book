@@ -29,7 +29,21 @@ const update = async (req, res) => {
         return res.status(500).json({ error: 'Something went wrong' })
     }
 }
+
+const getUserInfo = async (req, res) => {
+    const userId = parseInt(req.params.id)
+
+    try {
+        const user = await fetchUserInfo(userId)
+
+        return res.json({ user })
+    } catch (error) {
+        return res.status(500).json({ error: 'Something went wrong' })
+    }
+}
+
 module.exports = {
     index,
-    update
+    update,
+    getUserInfo
 }
