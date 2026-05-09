@@ -13,7 +13,7 @@ const validateRegister = [
             })
 
             if(user) {
-                throw new Error(`${path.charAt(0).toUpperCase() + path.slice(1)} is already in use.`)
+                throw new Error('Email is already in use.')
             }
 
             return true
@@ -29,7 +29,7 @@ const validateRegister = [
             })
 
             if(user) {
-                throw new Error(`${path.charAt(0).toUpperCase() + path.slice(1)} is already in use.`)
+                throw new Error('Username is already in use.')
             }
 
             return true
@@ -38,7 +38,15 @@ const validateRegister = [
     body('password')
         .trim()
         .notEmpty()
-        .withMessage('Password should not be empty.')
+        .withMessage('Password should not be empty.'),
+
+    body('confirm')
+        .trim()
+        .custom((value, { req }) => {
+            if(value !== req.body.password) {
+                throw new Error('Confirm password must be same as password.')
+            }
+        })
 ]
 
 module.exports = validateRegister
