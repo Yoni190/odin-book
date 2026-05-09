@@ -1,6 +1,7 @@
 const passport = require('passport')
 const { issueTokens } = require('../helpers/tokenHelper')
 const { createUser } = require('../services/authService')
+const { validationResult } = require('express-validator')
 
 const localLogin = (req, res, next) => {
     passport.authenticate('local', { session: false }, (err, user, info) => {
@@ -13,6 +14,13 @@ const localLogin = (req, res, next) => {
 }
 
 const register = async (req, res) => {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()) {
+        return res.status(400).json({
+            message: errors.array()[0].msg
+        })
+    }
+    
     try {
         await createUser(req.body)
 
