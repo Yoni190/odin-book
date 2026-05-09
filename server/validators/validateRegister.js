@@ -13,7 +13,7 @@ const validateRegister = [
             })
 
             if(user) {
-                throw new Error(`${path} is already in use.`)
+                throw new Error(`${path.charAt(0).toUpperCase() + path.slice(1)} is already in use.`)
             }
 
             return true
@@ -29,7 +29,7 @@ const validateRegister = [
             })
 
             if(user) {
-                throw new Error(`${path} is already in use.`)
+                throw new Error(`${path.charAt(0).toUpperCase() + path.slice(1)} is already in use.`)
             }
 
             return true
