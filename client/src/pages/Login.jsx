@@ -1,13 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router'
 import LoginBG from '../assets/login_bg.png'
 import GithubIcon from '../assets/github.png'
 
 
 const Login = () => {
+    const [formData, setFormData] = useState({
+        username: '',
+        password: ''
+    })
+
+    const [errors, setErrors] = useState({})
+
+    const handleLogin = (e) => {
+        e.preventDefault()
+
+        const newErrors = {}
+        if(!formData.username) {
+            newErrors.username = 'Enter your username'
+        } if(!formData.password) {
+            newErrors.password = 'Enter your password'
+        }
+
+        if(Object.keys(newErrors).length > 0) {
+            setErrors(newErrors)
+            return
+        }
+
+        setErrors({})
+
+        console.log(formData)
+    }
+
   return (
     <div className='flex justify-center bg-cover min-h-screen bg-center items-center' style={{ backgroundImage: `url(${LoginBG})` }}>
-        <form action="" className='flex flex-col w-1/3 border border-white/20 px-3 py-10 rounded-4xl items-center gap-5 shadow-xl bg-white/10 backdrop-blur-md text-white'>
+        <form onSubmit={handleLogin} className='flex flex-col w-1/3 border border-white/20 px-3 py-10 rounded-4xl items-center gap-5 shadow-xl bg-white/10 backdrop-blur-md text-white'>
             <div className='flex flex-col items-center gap-2 mb-2'>
                 <h1 className='text-4xl font-bold tracking-wide'>
                     Clover
@@ -25,7 +52,14 @@ const Login = () => {
                     name="username"
                     id="username"
                     className='border border-white/20 bg-white/20 rounded-xl p-3 outline-none focus:ring-2 focus:ring-white transition'
-                    placeholder='coolest_username' />
+                    placeholder='coolest_username'
+                    value={formData.username}
+                    onChange={(e) => setFormData({...formData, username: e.target.value})} />
+                    {errors.username && (
+                        <div>
+                            <p>{errors.username}</p>
+                        </div>
+                    )}
             </div>
 
             <div className="flex flex-col w-2/3">
@@ -35,7 +69,15 @@ const Login = () => {
                     name="password"
                     id="password"
                     className='border border-gray-400 bg-white/20 rounded-xl p-3 outline-none focus:ring-2 focus:ring-white transition'
-                    placeholder='totally hard to guess password' />
+                    placeholder='totally hard to guess password'
+                    value={formData.password}
+                    autoComplete='new-password'
+                    onChange={(e) => setFormData({...formData, password: e.target.value})} />
+                    {errors.password && (
+                        <div>
+                            <p>{errors.password}</p>
+                        </div>
+                    )}
             </div>
 
             <button
