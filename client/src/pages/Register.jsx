@@ -7,6 +7,7 @@ import axios from 'axios'
 const Register = () => {
     const API_URL = import.meta.env.VITE_API_URL
     const navigate = useNavigate()
+    const [loading, setLoading] = useState(false)
 
     const [formData, setFormData] = useState({
         fName: '',
@@ -45,6 +46,7 @@ const Register = () => {
         }
 
         setErrors({})
+        setLoading(true)
 
         try {
             const res = await axios.post(`${API_URL}/auth/register`, formData)
@@ -56,6 +58,8 @@ const Register = () => {
         } catch (error) {
             console.error(error)
             setErrors(error.response.data)
+        } finally {
+            setLoading(false)
         }
     }
   return (
@@ -172,8 +176,15 @@ const Register = () => {
             </div>
 
             <button
+            disabled={loading}
             className='border border-white/50 w-2/3 rounded-4xl py-2 bg-white/10 cursor-pointer hover:bg-white/40 transition duration-300 hover:scale-[1.02]'>
-                Register
+                {loading ? (
+                    <div className='flex justify-center'>
+                        <div className='w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin'></div>
+                    </div>
+                ) : (
+                    'Register'
+                )}
             </button>
             <button
             className='border border-gray-400 w-2/3 rounded-4xl py-2 bg-white text-black cursor-pointer hover:bg-gray-100 transition duration-300 hover:scale-[1.02]'>
