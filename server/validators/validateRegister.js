@@ -7,13 +7,13 @@ const validateRegister = [
         .trim()
         .notEmpty()
         .withMessage('Email should not be empty.')
-        .custom(async (email) => {
+        .custom(async (email, { path }) => {
             const user = await prisma.user.findUnique({
                 where: { email }
             })
 
             if(user) {
-                throw new Error('Email is already in use.')
+                throw new Error(`${path} is already in use.`)
             }
 
             return true
@@ -23,13 +23,13 @@ const validateRegister = [
         .trim()
         .notEmpty()
         .withMessage('Username should not be empty.')
-        .custom(async (username) => {
+        .custom(async (username, { path }) => {
             const user = await prisma.user.findUnique({
                 where: { username }
             })
 
             if(user) {
-                throw new Error('Username is already in use.')
+                throw new Error(`${path} is already in use.`)
             }
 
             return true

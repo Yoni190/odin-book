@@ -16,8 +16,11 @@ const localLogin = (req, res, next) => {
 const register = async (req, res) => {
     const errors = validationResult(req)
     if(!errors.isEmpty()) {
+        const error = errors.array()[0]
+
+
         return res.status(400).json({
-            message: errors.array()[0].msg
+            [error.path]: error.msg
         })
     }
     
