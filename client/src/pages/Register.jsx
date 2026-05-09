@@ -9,8 +9,8 @@ const Register = () => {
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
-        f_name: '',
-        l_name: '',
+        fName: '',
+        lName: '',
         email: '',
         username: '',
         password: '',
@@ -23,10 +23,10 @@ const Register = () => {
         e.preventDefault()
 
         const newErrors = {}
-        if(!formData.f_name) {
-            newErrors.f_name = 'Enter your first name'
-        } if(!formData.l_name) {
-            newErrors.l_name = 'Enter your last name'
+        if(!formData.fName) {
+            newErrors.fName = 'Enter your first name'
+        } if(!formData.lName) {
+            newErrors.lName = 'Enter your last name'
         } if(!formData.email) {
             newErrors.email = 'Enter your email'
         } if(!formData.username) {
@@ -71,35 +71,35 @@ const Register = () => {
             </div>
 
             <div className='flex flex-col w-2/3'>
-                <label htmlFor="f_name">First Name</label>
+                <label htmlFor="fName">First Name</label>
                 <input
                     type="text"
-                    name="f_name"
-                    id="f_name"
+                    name="fName"
+                    id="fName"
                     className='border border-white/20 bg-white/20 rounded-xl p-3 outline-none focus:ring-2 focus:ring-white transition'
                     placeholder='John'
-                    value={formData.f_name}
-                    onChange={(e) => setFormData({...formData, f_name: e.target.value })} />
-                    {errors.f_name && (
+                    value={formData.fName}
+                    onChange={(e) => setFormData({...formData, fName: e.target.value })} />
+                    {errors.fName && (
                         <div>
-                            <p>{errors.f_name}</p>
+                            <p>{errors.fName}</p>
                         </div>
                     )}
             </div>
             
             <div className='flex flex-col w-2/3'>
-                <label htmlFor="l_name">Last Name</label>
+                <label htmlFor="lName">Last Name</label>
                 <input
                     type="text"
-                    name="l_name"
-                    id="l_name"
+                    name="lName"
+                    id="lName"
                     className='border border-white/20 bg-white/20 rounded-xl p-3 outline-none focus:ring-2 focus:ring-white transition'
                     placeholder='Doe'
-                    value={formData.l_name}
-                    onChange={(e) => setFormData({...formData, l_name: e.target.value })} />
-                    {errors.l_name && (
+                    value={formData.lName}
+                    onChange={(e) => setFormData({...formData, lName: e.target.value })} />
+                    {errors.lName && (
                         <div>
-                            <p>{errors.l_name}</p>
+                            <p>{errors.lName}</p>
                         </div>
                     )}
             </div>
