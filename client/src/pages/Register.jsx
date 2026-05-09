@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import LoginBG from '../assets/login_bg.png'
 import GithubIcon from '../assets/github.png'
+import axios from 'axios'
 
 const Register = () => {
+    const API_URL = import.meta.env.VITE_API_URL
+    const navigate = useNavigate()
+
     const [formData, setFormData] = useState({
         f_name: '',
         l_name: '',
@@ -15,7 +19,7 @@ const Register = () => {
 
     const [errors, setErrors] = useState({})
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault()
 
         const newErrors = {}
@@ -42,7 +46,16 @@ const Register = () => {
 
         setErrors({})
 
-        console.log(formData)
+        try {
+            const res = await axios.post(`${API_URL}/auth/register`, formData)
+
+            
+            if(res.status === 200) {
+                navigate('/')
+            }
+        } catch (error) {
+            console.error(error)
+        }
     }
   return (
     <div className='flex justify-center bg-cover min-h-screen bg-center items-center py-5' style={{ backgroundImage: `url(${LoginBG})` }}>
