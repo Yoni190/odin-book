@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { Link } from 'react-router'
 import LoginBG from '../assets/login_bg.png'
 import GithubIcon from '../assets/github.png'
-
+import axios from 'axios'
 
 const Login = () => {
+    const API_URL = import.meta.env.VITE_API_URL
     const [formData, setFormData] = useState({
         username: '',
         password: ''
@@ -12,7 +13,7 @@ const Login = () => {
 
     const [errors, setErrors] = useState({})
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
 
         const newErrors = {}
@@ -29,7 +30,13 @@ const Login = () => {
 
         setErrors({})
 
-        console.log(formData)
+        try {
+            const res = await axios.post(`${API_URL}/auth/login`, formData)
+
+            localStorage.setItem('token', res.data.accessToken)
+        } catch (error) {
+            console.error(error)
+        }
     }
 
   return (
