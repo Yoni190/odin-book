@@ -1,12 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router'
 import LoginBG from '../assets/login_bg.png'
 import GithubIcon from '../assets/github.png'
 
 const Register = () => {
+    const [formData, setFormData] = useState({
+        f_name: '',
+        l_name: '',
+        email: '',
+        username: '',
+        password: '',
+        confirm: ''
+    })
+
+    const handleRegister = (e) => {
+        e.preventDefault()
+
+        console.log(formData)
+    }
   return (
     <div className='flex justify-center bg-cover min-h-screen bg-center items-center py-5' style={{ backgroundImage: `url(${LoginBG})` }}>
-        <form action="" className='flex flex-col w-1/3 border border-white/20 px-3 py-10 rounded-4xl items-center gap-5 shadow-xl bg-white/10 backdrop-blur-md text-white'>
+        <form onSubmit={handleRegister} className='flex flex-col w-1/3 border border-white/20 px-3 py-10 rounded-4xl items-center gap-5 shadow-xl bg-white/10 backdrop-blur-md text-white'>
             <div className='flex flex-col items-center gap-2 mb-2'>
                 <h1 className='text-4xl font-bold tracking-wide'>
                     Clover
@@ -24,7 +38,9 @@ const Register = () => {
                     name="f_name"
                     id="f_name"
                     className='border border-white/20 bg-white/20 rounded-xl p-3 outline-none focus:ring-2 focus:ring-white transition'
-                    placeholder='John' />
+                    placeholder='John'
+                    value={formData.f_name}
+                    onChange={(e) => setFormData({...formData, f_name: e.target.value })} />
             </div>
             <div className='flex flex-col w-2/3'>
                 <label htmlFor="l_name">Last Name</label>
@@ -33,7 +49,9 @@ const Register = () => {
                     name="l_name"
                     id="l_name"
                     className='border border-white/20 bg-white/20 rounded-xl p-3 outline-none focus:ring-2 focus:ring-white transition'
-                    placeholder='Doe' />
+                    placeholder='Doe'
+                    value={formData.l_name}
+                    onChange={(e) => setFormData({...formData, l_name: e.target.value })} />
             </div>
             <div className='flex flex-col w-2/3'>
                 <label htmlFor="email">Email</label>
@@ -42,7 +60,9 @@ const Register = () => {
                     name="email"
                     id="email"
                     className='border border-white/20 bg-white/20 rounded-xl p-3 outline-none focus:ring-2 focus:ring-white transition'
-                    placeholder='cool@email.com' />
+                    placeholder='cool@email.com'
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value })} />
             </div>
             <div className='flex flex-col w-2/3'>
                 <label htmlFor="username">Username</label>
@@ -51,7 +71,9 @@ const Register = () => {
                     name="username"
                     id="username"
                     className='border border-white/20 bg-white/20 rounded-xl p-3 outline-none focus:ring-2 focus:ring-white transition'
-                    placeholder='coolest_username' />
+                    placeholder='coolest_username'
+                    value={formData.username}
+                    onChange={(e) => setFormData({...formData, username: e.target.value })} />
             </div>
 
             <div className="flex flex-col w-2/3">
@@ -62,7 +84,9 @@ const Register = () => {
                     id="password"
                     autoComplete="new-password"
                     className='border border-gray-400 bg-white/20 rounded-xl p-3 outline-none focus:ring-2 focus:ring-white transition'
-                    placeholder='totally hard to guess password' />
+                    placeholder='totally hard to guess password'
+                    value={formData.password}
+                    onChange={(e) => setFormData({...formData, password: e.target.value })} />
             </div>
             <div className="flex flex-col w-2/3">
                 <label htmlFor="confirm">Confirm Password</label>
@@ -71,7 +95,9 @@ const Register = () => {
                     name="confirm"
                     id="confirm"
                     className='border border-gray-400 bg-white/20 rounded-xl p-3 outline-none focus:ring-2 focus:ring-white transition'
-                    placeholder="totally hard to guess password's twin" />
+                    placeholder="totally hard to guess password's twin"
+                    value={formData.confirm}
+                    onChange={(e) => setFormData({...formData, confirm: e.target.value })} />
             </div>
 
             <button
