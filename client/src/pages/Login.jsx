@@ -38,6 +38,7 @@ const Login = () => {
             localStorage.setItem('token', res.data.accessToken)
         } catch (error) {
             console.error(error)
+            setErrors(error.response.data)
         } finally {
             setLoading(false)
         }
