@@ -6,6 +6,8 @@ import { BrowserRouter, Route, Routes } from 'react-router'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
+import ProtectedRoute from './components/ProtectedRoute'
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -15,7 +17,10 @@ function App() {
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/home' element={<Home />} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path='/home' element={<Home />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )
