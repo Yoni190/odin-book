@@ -13,8 +13,34 @@ const Register = () => {
         confirm: ''
     })
 
+    const [errors, setErrors] = useState({})
+
     const handleRegister = (e) => {
         e.preventDefault()
+
+        const newErrors = {}
+        if(!formData.f_name) {
+            newErrors.f_name = 'Enter your first name'
+        } if(!formData.l_name) {
+            newErrors.l_name = 'Enter your last name'
+        } if(!formData.email) {
+            newErrors.email = 'Enter your email'
+        } if(!formData.username) {
+            newErrors.username = 'Enter your username'
+        } if(!formData.password) {
+            newErrors.password = 'Enter your password'
+        } if(!formData.confirm) {
+            newErrors.confirm = 'Reenter your password'
+        } if(formData.password !== formData.confirm) {
+            newErrors.confirm = 'Password and confirm password must match'
+        }
+
+        if(Object.keys(newErrors).length > 0) {
+            setErrors(newErrors)
+            return
+        }
+
+        setErrors({})
 
         console.log(formData)
     }
@@ -41,7 +67,13 @@ const Register = () => {
                     placeholder='John'
                     value={formData.f_name}
                     onChange={(e) => setFormData({...formData, f_name: e.target.value })} />
+                    {errors.f_name && (
+                        <div>
+                            <p>{errors.f_name}</p>
+                        </div>
+                    )}
             </div>
+            
             <div className='flex flex-col w-2/3'>
                 <label htmlFor="l_name">Last Name</label>
                 <input
@@ -52,6 +84,11 @@ const Register = () => {
                     placeholder='Doe'
                     value={formData.l_name}
                     onChange={(e) => setFormData({...formData, l_name: e.target.value })} />
+                    {errors.l_name && (
+                        <div>
+                            <p>{errors.l_name}</p>
+                        </div>
+                    )}
             </div>
             <div className='flex flex-col w-2/3'>
                 <label htmlFor="email">Email</label>
@@ -63,6 +100,11 @@ const Register = () => {
                     placeholder='cool@email.com'
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value })} />
+                    {errors.email && (
+                        <div>
+                            <p>{errors.email}</p>
+                        </div>
+                    )}
             </div>
             <div className='flex flex-col w-2/3'>
                 <label htmlFor="username">Username</label>
@@ -74,6 +116,11 @@ const Register = () => {
                     placeholder='coolest_username'
                     value={formData.username}
                     onChange={(e) => setFormData({...formData, username: e.target.value })} />
+                    {errors.username && (
+                        <div>
+                            <p>{errors.username}</p>
+                        </div>
+                    )}
             </div>
 
             <div className="flex flex-col w-2/3">
@@ -87,6 +134,11 @@ const Register = () => {
                     placeholder='totally hard to guess password'
                     value={formData.password}
                     onChange={(e) => setFormData({...formData, password: e.target.value })} />
+                    {errors.password && (
+                        <div>
+                            <p>{errors.password}</p>
+                        </div>
+                    )}
             </div>
             <div className="flex flex-col w-2/3">
                 <label htmlFor="confirm">Confirm Password</label>
@@ -98,6 +150,11 @@ const Register = () => {
                     placeholder="totally hard to guess password's twin"
                     value={formData.confirm}
                     onChange={(e) => setFormData({...formData, confirm: e.target.value })} />
+                    {errors.confirm && (
+                        <div>
+                            <p>{errors.confirm}</p>
+                        </div>
+                    )}
             </div>
 
             <button
