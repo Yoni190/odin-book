@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import LoginBG from '../assets/login_bg.png'
 import GithubIcon from '../assets/github.png'
 import axios from 'axios'
 
 const Login = () => {
     const API_URL = import.meta.env.VITE_API_URL
+    const navigate = useNavigate()
+
+
     const [formData, setFormData] = useState({
         username: '',
         password: ''
@@ -36,6 +39,7 @@ const Login = () => {
             const res = await axios.post(`${API_URL}/auth/login`, formData)
 
             localStorage.setItem('token', res.data.accessToken)
+            navigate('/home')
         } catch (error) {
             console.error(error.response.data)
             setErrors(error.response.data)
