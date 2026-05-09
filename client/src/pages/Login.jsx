@@ -37,7 +37,7 @@ const Login = () => {
 
             localStorage.setItem('token', res.data.accessToken)
         } catch (error) {
-            console.error(error)
+            console.error(error.response.data)
             setErrors(error.response.data)
         } finally {
             setLoading(false)
@@ -85,9 +85,9 @@ const Login = () => {
                     value={formData.password}
                     autoComplete='new-password'
                     onChange={(e) => setFormData({...formData, password: e.target.value})} />
-                    {errors.password && (
+                    {errors.password || errors.error && (
                         <div>
-                            <p>{errors.password}</p>
+                            <p>{errors.password || errors.error}</p>
                         </div>
                     )}
             </div>
