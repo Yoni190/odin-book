@@ -9,6 +9,7 @@ const router = Router()
 
 router.post('/login', validateLogin, authController.localLogin)
 router.post('/register', validateRegister, authController.register)
+router.get('/verify-token', authController.verifyToken)
 
 
 module.exports = router

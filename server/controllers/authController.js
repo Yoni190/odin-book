@@ -2,6 +2,8 @@ const passport = require('passport')
 const { issueTokens } = require('../helpers/tokenHelper')
 const { createUser } = require('../services/authService')
 const { validationResult } = require('express-validator')
+const { verifyAccessToken } = require('../utils/jwt')
+
 
 const localLogin = (req, res, next) => {
     const errors = validationResult(req)
@@ -43,7 +45,28 @@ const register = async (req, res) => {
     }
 }
 
+const verifyToken = (req, res) => {
+    const authHeader = req.headers.authorization
+
+    if (!authHeader) {
+        return res.status(401).json({
+            valid: false
+        })
+    }
+
+    const token = authHeader.split(' ')[1]
+
+    try {
+        const decoded = verifyAccessToken(token)
+
+        return res.json({ valid: true, user: decoded })
+    } catch (error) {
+        return res.status(401).json({ valid: false })
+    }
+}
+
 module.exports = {
     localLogin,
-    register
+    register,
+    verifyToken
 }
