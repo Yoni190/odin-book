@@ -4,6 +4,15 @@ const { createUser } = require('../services/authService')
 const { validationResult } = require('express-validator')
 
 const localLogin = (req, res, next) => {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()) {
+        const error = errors.array()[0]
+
+        return res.status(400).json({
+            [error.path]: error.msg
+        })
+    }
+
     passport.authenticate('local', { session: false }, (err, user, info) => {
         if(err) return next(err)
         if(!user) return res.status(401).json({ error: info?.message })
