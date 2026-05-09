@@ -12,14 +12,14 @@ app.use(express.json())
 app.use(cors())
 app.use(cookieParser())
 
-app.use('/auth', routes.authRoute)
-app.use('/posts', routes.postRoute)
-app.use('/posts', routes.likeRoute)
-app.use('/posts', routes.commentRoute)
-app.use('/comments', routes.commentRoute)
+app.use('/api/auth', routes.authRoute)
+app.use('/api/posts', routes.postRoute)
+app.use('/api/posts', routes.likeRoute)
+app.use('/api/posts', routes.commentRoute)
+app.use('/api/comments', routes.commentRoute)
 
-app.use('/profile', routes.profileRoute)
-app.use('/follows', routes.followRoute)
+app.use('/api/profile', routes.profileRoute)
+app.use('/api/follows', routes.followRoute)
 
 const PORT = process.env.PORT
 
