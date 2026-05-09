@@ -23,6 +23,8 @@ const validateRegister = [
         .trim()
         .notEmpty()
         .withMessage('Username should not be empty.')
+        .isLength({ min: 3, max: 15 })
+        .withMessage('Username must be between 3 and 15 characters long.')
         .custom(async (username, { path }) => {
             const user = await prisma.user.findUnique({
                 where: { username }
