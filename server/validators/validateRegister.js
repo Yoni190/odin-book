@@ -40,7 +40,9 @@ const validateRegister = [
     body('password')
         .trim()
         .notEmpty()
-        .withMessage('Password should not be empty.'),
+        .withMessage('Password should not be empty.')
+        .isLength({ min: 8 })
+        .withMessage('Password must be at least 8 characters long.'),
 
     body('confirm')
         .trim()
