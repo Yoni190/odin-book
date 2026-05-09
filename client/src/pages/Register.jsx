@@ -49,12 +49,13 @@ const Register = () => {
         try {
             const res = await axios.post(`${API_URL}/auth/register`, formData)
 
-            
-            if(res.status === 200) {
-                navigate('/')
-            }
+            console.log(res)
+            // if(res.status === 200) {
+            //     navigate('/')
+            // }
         } catch (error) {
             console.error(error)
+            setErrors(error.response.data)
         }
     }
   return (
