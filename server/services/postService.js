@@ -16,6 +16,9 @@ const fetchPosts = async () => {
                     comments: true
                 }
             }
+        },
+        orderBy: {
+            createdAt: 'desc'
         }
     })
 
