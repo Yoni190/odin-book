@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Heart, MessageSquare } from 'lucide-react'
 import Clover from '../components/Clover'
 import axios from 'axios'
+import { formatDistanceToNow } from 'date-fns'
 
 
 
@@ -55,6 +56,11 @@ const Home = () => {
   }, [])
   
 
+  const formatDate = (date) => {
+    return formatDistanceToNow(new Date(date), {
+      addSuffix: true
+    })
+  }
   return (
     <div className='p-4'>
 
@@ -63,7 +69,7 @@ const Home = () => {
         <Clover
           key={clover.id}
           username={clover.author.username}
-          posted={clover.createdAt}
+          posted={formatDate(clover.createdAt)}
           content={clover.content}
           likes={clover._count.likes}
           comments={clover._count.comments} />
