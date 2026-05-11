@@ -9,6 +9,12 @@ const fetchPosts = async () => {
                 select: {
                     username: true
                 }
+            },
+            _count: {
+                select: {
+                    likes: true,
+                    comments: true
+                }
             }
         }
     })
