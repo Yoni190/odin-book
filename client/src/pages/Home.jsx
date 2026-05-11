@@ -1,33 +1,59 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Heart, MessageSquare } from 'lucide-react'
 import Clover from '../components/Clover'
+import axios from 'axios'
+
 
 
 const Home = () => {
+  const [clovers, setClovers] = useState([])
+  const API_URL = import.meta.env.VITE_API_URL
 
-  const clovers = [
-    {
-      username: 'cool_username',
-      posted: '1h',
-      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto sint neque consequuntur, maiores earum eius, assumenda deleniti dolore minima quisquam beatae, suscipit cumque magni amet molestias laudantium sed mollitia nam.',
-      likes: 20,
-      comments: 30
-    },
-    {
-      username: 'cool_username',
-      posted: '1h',
-      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto sint neque consequuntur, maiores earum eius, assumenda deleniti dolore minima quisquam beatae, suscipit cumque magni amet molestias laudantium sed mollitia nam.',
-      likes: 20,
-      comments: 30
-    },
-    {
-      username: 'cool_username',
-      posted: '1h',
-      content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto sint neque consequuntur, maiores earum eius, assumenda deleniti dolore minima quisquam beatae, suscipit cumque magni amet molestias laudantium sed mollitia nam.',
-      likes: 20,
-      comments: 30
-    },
-  ]
+  // const clovers = [
+  //   {
+  //     username: 'cool_username',
+  //     posted: '1h',
+  //     content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto sint neque consequuntur, maiores earum eius, assumenda deleniti dolore minima quisquam beatae, suscipit cumque magni amet molestias laudantium sed mollitia nam.',
+  //     likes: 20,
+  //     comments: 30
+  //   },
+  //   {
+  //     username: 'cool_username',
+  //     posted: '1h',
+  //     content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto sint neque consequuntur, maiores earum eius, assumenda deleniti dolore minima quisquam beatae, suscipit cumque magni amet molestias laudantium sed mollitia nam.',
+  //     likes: 20,
+  //     comments: 30
+  //   },
+  //   {
+  //     username: 'cool_username',
+  //     posted: '1h',
+  //     content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto sint neque consequuntur, maiores earum eius, assumenda deleniti dolore minima quisquam beatae, suscipit cumque magni amet molestias laudantium sed mollitia nam.',
+  //     likes: 20,
+  //     comments: 30
+  //   },
+  // ]
+
+  useEffect(() => {
+    const getClovers = async () => {
+      try {
+        const token = localStorage.getItem('token')
+        const res = await axios.get(`${API_URL}/posts`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+
+        console.log(res.data.posts)
+        setClovers(res.data.posts)
+
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    getClovers()
+  }, [])
+  
 
   return (
     <div className='p-4'>
@@ -35,12 +61,12 @@ const Home = () => {
       
       {clovers.map((clover, index) => (
         <Clover
-          key={index}
-          username={clover.username}
-          posted={clover.posted}
+          key={clover.id}
+          username={clover.author.username}
+          posted={clover.createdAt}
           content={clover.content}
-          likes={clover.likes}
-          comments={clover.comments} />
+          likes={clover._count.likes}
+          comments={clover._count.comments} />
       ))}
       
     </div>
