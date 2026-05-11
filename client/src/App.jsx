@@ -8,6 +8,10 @@ import Register from './pages/Register'
 import Home from './pages/Home'
 import ProtectedRoute from './components/ProtectedRoute'
 import PublicRoute from './components/PublicRoute'
+import Header from './components/Header'
+import MainLayout from './components/MainLayout'
+
+
 
 
 
@@ -24,7 +28,9 @@ function App() {
         
 
         <Route element={<ProtectedRoute />}>
-          <Route path='/home' element={<Home />} />
+          <Route element={<MainLayout />}>
+            <Route path='/home' element={<Home />} />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
