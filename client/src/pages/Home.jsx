@@ -8,6 +8,9 @@ import { formatDistanceToNow } from 'date-fns'
 
 const Home = () => {
   const [clovers, setClovers] = useState([])
+  const [clover, setClover] = useState('')
+  const token = localStorage.getItem('token')
+
   const API_URL = import.meta.env.VITE_API_URL
 
   // const clovers = [
@@ -37,7 +40,6 @@ const Home = () => {
   useEffect(() => {
     const getClovers = async () => {
       try {
-        const token = localStorage.getItem('token')
         const res = await axios.get(`${API_URL}/posts`, {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -61,8 +63,46 @@ const Home = () => {
       addSuffix: true
     })
   }
+
+  const postClover = async () => {
+    console.log(token)
+
+    try {
+      const res = await axios.post(`${API_URL}/posts`,
+        {
+          content: clover
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        }
+      )
+
+      console.log(res)
+    } catch (error) {
+      console.error(error.response?.data)
+    }
+  }
   return (
     <div className='p-4'>
+
+      <form onSubmit={postClover} className='grid grid-cols-1'>
+        <input
+          type="text"
+          name="content"
+          id="content"
+          placeholder="What's on your thought?"
+          className='p-4 outline-none'
+          value={clover}
+          onChange={(e) => setClover(e.target.value)} />
+
+          <div className='flex justify-end'>
+            <button className='border rounded-xl px-3 py-1 cursor-pointer hover:bg-red-800 hover:text-white transition duration-300'>
+              Post
+            </button>
+          </div>
+      </form>
 
       
       {clovers.map((clover, index) => (
