@@ -11,7 +11,8 @@ const Header = () => {
     }
 
   return (
-    <header className='bg-red-800 text-white p-4 flex justify-between'>
+    <header className="bg-gradient-to-r from-red-800 via-red-700 to-red-900 text-white p-4 flex justify-between">
+
         <Link to={'/home'}><h1 className='text-4xl font-semibold'>Clover</h1></Link>
 
         <button
