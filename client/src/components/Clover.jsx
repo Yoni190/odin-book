@@ -11,12 +11,12 @@ const Clover = ({ username, posted, content, likes, comments}) => {
             
             <div className="flex gap-3">
 
-            <div className='flex gap-1 hover:text-red-400 transition duration-300 hover:scale-[1.05]'>
+            <div className='flex gap-1 hover:text-red-400 transition duration-300 hover:scale-[1.05] cursor-pointer'>
                 <Heart />
                 <p>{likes}</p>
             </div>
 
-            <div className='flex gap-1 hover:text-blue-400 transition duration-300 hover:scale-[1.05]'>
+            <div className='flex gap-1 hover:text-blue-400 transition duration-300 hover:scale-[1.05] cursor-pointer'>
                 <MessageSquare />
                 <p>{comments}</p>
             </div>
