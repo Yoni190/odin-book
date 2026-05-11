@@ -1,5 +1,6 @@
 import React from 'react'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
+
 
 const Header = () => {
     const navigate = useNavigate()
@@ -11,7 +12,7 @@ const Header = () => {
 
   return (
     <header className='bg-red-800 text-white p-4 flex justify-between'>
-        <h1 className='text-4xl font-semibold'>Clover</h1>
+        <Link to={'/home'}><h1 className='text-4xl font-semibold'>Clover</h1></Link>
 
         <button
             className='border p-1 rounded cursor-pointer hover:bg-white hover:text-red-800 transition'
