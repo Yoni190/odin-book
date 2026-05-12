@@ -10,6 +10,8 @@ import ProtectedRoute from './components/ProtectedRoute'
 import PublicRoute from './components/PublicRoute'
 import Header from './components/Header'
 import MainLayout from './components/MainLayout'
+import Profile from './pages/Profile'
+
 
 
 
@@ -30,6 +32,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
             <Route path='/home' element={<Home />} />
+            <Route path='/profile' element={<Profile />} />
           </Route>
         </Route>
       </Routes>
