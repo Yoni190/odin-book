@@ -6,6 +6,7 @@ const validatePost = require('../validators/validatePost')
 const router = Router()
 
 router.get('/', authenticate, postController.index)
+router.get('/me', authenticate, postController.getMyPosts)
 router.get('/:id', authenticate, postController.post)
 router.post('/', authenticate, validatePost, postController.store)
 router.put('/:id', authenticate, postController.update)
