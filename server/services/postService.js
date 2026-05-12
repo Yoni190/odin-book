@@ -42,7 +42,23 @@ const fetchPost = async (id) => {
 
 const fetchMyPosts = async (userId) => {
     const posts = await prisma.post.findMany({
-        where: { authorId: userId }
+        where: { authorId: userId },
+        include: {
+            author: {
+                select: {
+                    username: true
+                }
+            },
+            _count: {
+                select: {
+                    likes: true,
+                    comments: true
+                }
+            }
+        },
+        orderBy: {
+            createdAt: 'desc'
+        }
     })
 
     return posts
