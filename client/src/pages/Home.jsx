@@ -87,6 +87,7 @@ const Home = () => {
       console.log(res)
     } catch (error) {
       console.error(error.response?.data)
+      setError(error.response?.data.content)
     }
   }
   return (
