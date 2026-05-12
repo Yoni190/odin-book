@@ -10,6 +10,7 @@ const Home = () => {
   const [clovers, setClovers] = useState([])
   const [clover, setClover] = useState('')
   const token = localStorage.getItem('token')
+  const [error, setError] = useState('')
 
   const API_URL = import.meta.env.VITE_API_URL
 
@@ -64,8 +65,12 @@ const Home = () => {
     })
   }
 
-  const postClover = async () => {
-    console.log(token)
+  const postClover = async (e) => {
+    if (!clover) {
+      e.preventDefault()
+      setError('Clover cannot be empty!')
+      return
+    }
 
     try {
       const res = await axios.post(`${API_URL}/posts`,
@@ -102,6 +107,12 @@ const Home = () => {
               Post
             </button>
           </div>
+
+          {error && (
+            <div>
+              <p className='text-red-500'>{error}</p>
+            </div>
+          )}
       </form>
 
       
