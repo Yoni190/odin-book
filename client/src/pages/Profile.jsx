@@ -1,6 +1,9 @@
 import axios from 'axios'
-import { format } from 'date-fns'
+import { format, formatDistanceToNow } from 'date-fns'
 import React, { useEffect, useState } from 'react'
+import Clover from '../components/Clover'
+
+
 
 
 
@@ -8,6 +11,7 @@ const Profile = () => {
   const token = localStorage.getItem('token')
   const [user, setUser] = useState({})
   const [loading, setLoading] = useState(false)
+  const [posts, setPosts] = useState([])
 
   const API_URL = import.meta.env.VITE_API_URL
   useEffect(() => {
@@ -30,8 +34,30 @@ const Profile = () => {
         }
     }
 
+    const getUserPosts = async () => {
+        try {
+            const res = await axios.get(`${API_URL}/posts/me`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+
+            console.log(res.data)
+            setPosts(res.data.posts)
+        } catch (error) {
+            console.error(error.response?.data)
+        }
+    }
+
     getUserData()
+    getUserPosts()
   }, [])
+
+  const formatDate = (date) => {
+      return formatDistanceToNow(new Date(date), {
+        addSuffix: true
+      })
+    }
   
   return (
     <div>
@@ -58,10 +84,21 @@ const Profile = () => {
                     
 
                     <div className='flex gap-3'>
-                        <h3>Followers {user._count.followers}</h3>
-                        <h3>Followings {user._count.followings}</h3>
+                        <h3>Followers {user._count?.followers}</h3>
+                        <h3>Followings {user._count?.followings}</h3>
                     </div>
                 </div>
+
+                {/* User Posts */}
+                {posts.map((post, index) => (
+                    <Clover
+                    key={post.id}
+                    username={post.author.username}
+                    posted={formatDate(post.createdAt)}
+                    content={post.content}
+                    likes={post._count.likes}
+                    comments={post._count.comments} />
+                ))}
             </>
         )}
         
