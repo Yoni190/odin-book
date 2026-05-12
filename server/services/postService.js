@@ -40,6 +40,14 @@ const fetchPost = async (id) => {
     return post
 }
 
+const fetchMyPosts = async (userId) => {
+    const posts = await prisma.post.findMany({
+        where: { authorId: userId }
+    })
+
+    return posts
+}
+
 const createPost = async (content, authorId) => {
     const post = await prisma.post.create({
         data: {
@@ -82,5 +90,6 @@ module.exports = {
     fetchPost,
     createPost,
     editPost,
-    deletePost
+    deletePost,
+    fetchMyPosts
 }

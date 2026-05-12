@@ -1,6 +1,6 @@
 const { validationResult } = require('express-validator')
 const { NotFoundError, ForbiddenError } = require('../lib/errors')
-const { fetchPosts, fetchPost, createPost, editPost, deletePost } = require('../services/postService')
+const { fetchPosts, fetchPost, createPost, editPost, deletePost, fetchMyPosts } = require('../services/postService')
 
 
 const index = async (req, res) => {
@@ -10,6 +10,17 @@ const index = async (req, res) => {
         return res.json({ posts })
     } catch (error) {
         return res.status(500).json({ error: 'Something went wrong' })
+    }
+}
+
+const getMyPosts = async (req, res) => {
+    const userId = req.user.id
+    try {
+        const posts = await fetchMyPosts(userId)
+
+        return res.json({ posts })
+    } catch (error) {
+        return res.status(500).json({ error })
     }
 }
 
@@ -86,5 +97,6 @@ module.exports = {
     post,
     store,
     update,
-    destroy
+    destroy,
+    getMyPosts
 }
