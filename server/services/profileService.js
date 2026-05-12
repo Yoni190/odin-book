@@ -13,7 +13,14 @@ const fetchUserInfo = async (userId) => {
             username: true,
             avatar: true,
             bio: true,
-            createdAt: true
+            createdAt: true,
+
+            _count: {
+                select: {
+                    followers: true,
+                    followings: true
+                }
+            }
         }
     })
 
