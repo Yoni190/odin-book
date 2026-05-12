@@ -1,3 +1,4 @@
+const { validationResult } = require('express-validator')
 const { NotFoundError, ForbiddenError } = require('../lib/errors')
 const { fetchPosts, fetchPost, createPost, editPost, deletePost } = require('../services/postService')
 
@@ -26,6 +27,15 @@ const post = async (req, res) => {
 }
 
 const store = async (req, res) => {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()) {
+        const error = errors.array()[0]
+        
+        return res.status(400).json({
+            [error.path]: error.msg
+        })
+    }
+
     const { content } = req.body
     const authorId = req.user.id
 
