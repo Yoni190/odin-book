@@ -3,6 +3,8 @@ import { Heart, MessageSquare } from 'lucide-react'
 import Clover from '../components/Clover'
 import axios from 'axios'
 import { formatDistanceToNow } from 'date-fns'
+import getUserIdFromToken from '../helpers/getUserId'
+
 
 
 
@@ -11,6 +13,8 @@ const Home = () => {
   const [clover, setClover] = useState('')
   const token = localStorage.getItem('token')
   const [error, setError] = useState('')
+  const [userId, setUserId] = useState('')
+
 
   const API_URL = import.meta.env.VITE_API_URL
 
@@ -55,6 +59,11 @@ const Home = () => {
       }
     }
 
+    const userId = getUserIdFromToken()
+
+    setUserId(userId)
+    
+
     getClovers()
   }, [])
   
@@ -86,6 +95,8 @@ const Home = () => {
       setError('Clover cannot be empty!')
       return
     }
+
+    
 
     try {
       const res = await axios.post(`${API_URL}/posts`,
@@ -140,7 +151,8 @@ const Home = () => {
           content={clover.content}
           likes={clover._count.likes}
           comments={clover._count.comments} 
-          likePost={() => likePost(clover.id)}/>
+          likePost={() => likePost(clover.id)}
+          userId={userId}/>
       ))}
       
     </div>

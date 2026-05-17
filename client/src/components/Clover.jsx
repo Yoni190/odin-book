@@ -2,7 +2,8 @@ import { Heart, MessageSquare } from 'lucide-react'
 import React from 'react'
 
 
-const Clover = ({ username, posted, content, likes, comments, likePost}) => {
+const Clover = ({ username, posted, content, likes, comments, likePost, userId}) => {
+  
   return (
     <div className='border-b p-2'>
         <h2>@{username} . {posted}</h2>
