@@ -65,6 +65,21 @@ const Home = () => {
     })
   }
 
+
+  const likePost = async (id) => {
+    try {
+      const res = await axios.post(`${API_URL}/posts/${id}/likes`, null, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+
+      console.log(res.data)
+    } catch (error) {
+      console.error(error.response)
+    }
+  }
+
   const postClover = async (e) => {
     if (!clover) {
       e.preventDefault()
@@ -124,7 +139,8 @@ const Home = () => {
           posted={formatDate(clover.createdAt)}
           content={clover.content}
           likes={clover._count.likes}
-          comments={clover._count.comments} />
+          comments={clover._count.comments} 
+          likePost={() => likePost(clover.id)}/>
       ))}
       
     </div>
