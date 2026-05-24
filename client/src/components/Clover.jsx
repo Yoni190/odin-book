@@ -1,8 +1,19 @@
 import { Heart, MessageSquare } from 'lucide-react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 
-const Clover = ({ username, posted, content, likes, comments, likePost, userId}) => {
+const Clover = ({ username, posted, content, likesCount, likes, comments, likePost, userId}) => {
+
+  const [liked, setLiked] = useState(false)
+
+  useEffect(() => {
+    console.log(likes)
+    console.log(likes.userId)
+    if(likes.userId === userId) {
+      setLiked(true)
+    }
+  }, [])
+  
   
   return (
     <div className='border-b p-2'>
@@ -15,8 +26,9 @@ const Clover = ({ username, posted, content, likes, comments, likePost, userId})
             <div className='flex gap-1 hover:text-red-400 transition duration-300 hover:scale-[1.05] cursor-pointer'>
                 <Heart 
                   onClick={likePost}
+                  fill={liked ? 'red' : 'white'}
                   />
-                <p>{likes}</p>
+                <p>{likesCount}</p>
             </div>
 
             <div className='flex gap-1 hover:text-blue-400 transition duration-300 hover:scale-[1.05] cursor-pointer'>

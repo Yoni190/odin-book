@@ -149,7 +149,8 @@ const Home = () => {
           username={clover.author.username}
           posted={formatDate(clover.createdAt)}
           content={clover.content}
-          likes={clover._count.likes}
+          likesCount={clover._count.likes}
+          likes={clover.likes}
           comments={clover._count.comments} 
           likePost={() => likePost(clover.id)}
           userId={userId}/>
