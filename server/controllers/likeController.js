@@ -1,5 +1,5 @@
 const { NotFoundError } = require("../lib/errors")
-const { fetchLikes, createLike, deleteLike } = require("../services/likeService")
+const { fetchLikes, createLike, deleteLike, fetchLike } = require("../services/likeService")
 
 
 const index = async (req, res) => {
@@ -52,8 +52,20 @@ const destroy = async (req, res) => {
     }
 }
 
+const getLike = async (req, res) => {
+    const likeId = parseInt(req.params.likeId)
+
+    try {
+        const like = await fetchLike(likeId)
+        return like
+    } catch (error) {
+        return res.status(500).json({ error: 'Something went wrong' }) 
+    }
+}
+
 module.exports = {
     index,
     store,
-    destroy
+    destroy,
+    getLike
 }

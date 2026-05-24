@@ -50,8 +50,17 @@ const deleteLike = async (postId, userId) => {
     })
 }
 
+const fetchLike = async (likeId) => {
+    const like = await prisma.like.findUnique({
+        where: { id: likeId }
+    })
+
+    return like
+}
+
 module.exports = {
     fetchLikes,
     createLike,
-    deleteLike
+    deleteLike,
+    fetchLike
 }
