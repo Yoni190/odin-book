@@ -4,9 +4,16 @@ require('dotenv').config()
 const routes = require('./routes/index')
 const passport = require('./config/passport')
 const cookieParser = require('cookie-parser')
-
+const FluxManager = require('flux-manager').default
 
 const app = express()
+
+
+const fluxManager = FluxManager.attach(app, {
+  route: '/flux-manager',
+  port: 3000,         
+  maxRequests: 1000
+});
 
 app.use(express.json())
 app.use(cors())
