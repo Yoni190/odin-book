@@ -89,6 +89,20 @@ const Home = () => {
     }
   }
 
+  const unlikepost = async (id) => {
+    try {
+      const res = await axios.delete(`${API_URL}/posts/${id}/likes`, null, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+
+      console.log(res.data)
+    } catch (error) {
+      console.error(error.response)
+    }
+  }
+
   const postClover = async (e) => {
     if (!clover) {
       e.preventDefault()
@@ -153,6 +167,7 @@ const Home = () => {
           likes={clover.likes}
           comments={clover._count.comments} 
           likePost={() => likePost(clover.id)}
+          unlikePost={() => unlikepost(clover.id)}
           userId={userId}/>
       ))}
       
