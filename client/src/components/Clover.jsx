@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 
 
-const Clover = ({ id, username, posted, content, likesCount, likes, comments, likePost, unlikePost, userId}) => {
+const Clover = ({ id, username, posted, content, likesCount, likes, comments, toggleLike, userId}) => {
 
   const [liked, setLiked] = useState(false)
 
@@ -26,7 +26,7 @@ const Clover = ({ id, username, posted, content, likesCount, likes, comments, li
 
             <div className='flex gap-1 hover:text-red-400 transition duration-300 hover:scale-[1.05] cursor-pointer'>
                 <Heart 
-                  onClick={liked ? unlikePost : likePost}
+                  onClick={toggleLike}
                   fill={liked ? 'red' : 'white'}
                   />
                 <p>{likesCount}</p>
