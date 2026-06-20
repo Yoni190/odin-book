@@ -103,7 +103,7 @@ const CloverDetails = ({ userId }) => {
       <div className='p-4 border border-zinc-200 rounded-xl shadow-sm bg-zinc-50/50'>
         {/* Mirroring your Feed design header structure */}
         <h2 className='text-zinc-600 font-semibold mb-3'>
-          @{clover.user?.username || clover.username} • <span className='text-sm text-zinc-400 font-normal'>{clover.posted || 'Just now'}</span>
+          @{clover.author?.username || clover.username} • <span className='text-sm text-zinc-400 font-normal'>{clover.posted || 'Just now'}</span>
         </h2>
         
         <div className='flex flex-col gap-4'>
