@@ -1,17 +1,38 @@
+import axios from 'axios'
 import { Heart, MessageSquare } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router'
 
 
-const Clover = ({ id, username, posted, content, likesCount, likes, comments, toggleLike, userId }) => {
+
+const Clover = ({ id, username, posted, content, likesCount, likes, comments, userId }) => {
 
   const [liked, setLiked] = useState(false)
   const [count, setCount] = useState(likesCount)
+  const token = localStorage.getItem('token')
+  
+  const API_URL = import.meta.env.VITE_API_URL
 
   useEffect(() => {
     const userHasLiked = likes?.some(like => like.userId === userId)
     setLiked(!!userHasLiked)
   }, [likes, userId])
+
+  
+
+  const toggleLike = async (id) => {
+    try {
+      const res = await axios.post(`${API_URL}/posts/${id}/likes`, null, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+
+      console.log(res.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const handleLikeClick = async () => {
     const updatedLiked = !liked

@@ -75,19 +75,6 @@ const Home = () => {
   }
 
 
-  const toggleLike = async (id) => {
-    try {
-      const res = await axios.post(`${API_URL}/posts/${id}/likes`, null, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-
-      console.log(res.data)
-    } catch (error) {
-      console.error(error.response)
-    }
-  }
 
   const postClover = async (e) => {
     if (!clover) {
@@ -153,7 +140,6 @@ const Home = () => {
           likesCount={clover._count.likes}
           likes={clover.likes}
           comments={clover._count.comments} 
-          toggleLike={() => toggleLike(clover.id)}
           userId={userId}/>
       ))}
       
