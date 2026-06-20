@@ -25,7 +25,6 @@ const Profile = () => {
                 }
             })
 
-            console.log(res.data.user)
             setUser(res.data.user)
         } catch (error) {
             console.error(error.response?.data)
@@ -44,6 +43,7 @@ const Profile = () => {
 
             console.log(res.data)
             setPosts(res.data.posts)
+            console.log(res.data.posts)
         } catch (error) {
             console.error(error.response?.data)
         }
@@ -99,7 +99,8 @@ const Profile = () => {
                     content={post.content}
                     likesCount={post._count.likes}
                     likes={post.likes}
-                    comments={post._count.comments} />
+                    comments={post._count.comments}
+                    userId={user.id}/>
                 ))}
             </>
         )}

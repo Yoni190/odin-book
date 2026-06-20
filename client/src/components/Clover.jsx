@@ -28,7 +28,6 @@ const Clover = ({ id, username, posted, content, likesCount, likes, comments, us
         }
       })
 
-      console.log(res.data)
     } catch (error) {
       console.error(error)
     }

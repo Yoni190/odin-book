@@ -61,7 +61,8 @@ const fetchMyPosts = async (userId) => {
                     likes: true,
                     comments: true
                 }
-            }
+            },
+            likes: true
         },
         orderBy: {
             createdAt: 'desc'
