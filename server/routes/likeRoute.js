@@ -6,8 +6,8 @@ const router = Router()
 
 router.get('/likes/:likeId', authenticate, likeController.getLike)
 router.get('/:id/likes', authenticate, likeController.index)
-router.post('/:id/likes', authenticate, likeController.store)
-router.delete('/:id/likes', authenticate, likeController.destroy)
+router.post('/:id/likes', authenticate, likeController.handleToggleLike)
+// router.delete('/:id/likes', authenticate, likeController.destroy)
 
 
 module.exports = router

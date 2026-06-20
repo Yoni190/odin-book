@@ -1,5 +1,5 @@
 const { NotFoundError } = require("../lib/errors")
-const { fetchLikes, createLike, deleteLike, fetchLike } = require("../services/likeService")
+const { fetchLikes, toggleLike, deleteLike, fetchLike } = require("../services/likeService")
 
 
 const index = async (req, res) => {
@@ -18,12 +18,12 @@ const index = async (req, res) => {
     }
 }
 
-const store = async (req, res) => {
+const handleToggleLike = async (req, res) => {
     const postId = parseInt(req.params.id)
     const userId = req.user.id
 
     try {
-        const like = await createLike(postId, userId)
+        const like = await toggleLike(postId, userId)
 
         return res.status(201).json({ like })
     } catch (error) {
@@ -31,7 +31,7 @@ const store = async (req, res) => {
             return res.status(error.statusCode).json({ error: error.message })
         }
 
-        return res.status(500).json({ error: 'Something went wrong' })
+        return res.status(500).json({ error: error.message })
     }
 }
 
@@ -65,7 +65,7 @@ const getLike = async (req, res) => {
 
 module.exports = {
     index,
-    store,
+    handleToggleLike,
     destroy,
     getLike
 }

@@ -16,21 +16,44 @@ const fetchLikes = async (postId) => {
     return likes
 }
 
-const createLike = async (postId, userId) => {
+const toggleLike = async (postId, userId) => {
     const post = await prisma.post.findUnique({
         where: { id: postId }
     })
 
     if(!post) throw new NotFoundError('Post not found')
-    
-    const like = await prisma.like.create({
-        data: {
-            postId,
-            userId
+
+    const existingLike = await prisma.like.findUnique({
+        where: {
+            userId_postId: {
+                postId: postId,
+                userId: userId
+            }
         }
     })
 
-    return like
+    if(existingLike) {
+        await prisma.like.delete({
+            where: {
+                userId_postId: {
+                    postId,
+                    userId
+                }
+            }
+        })
+
+        return { liked: false }
+    } else {
+        const like = await prisma.like.create({
+            data: {
+                postId,
+                userId
+            }
+        })
+
+        return { liked: true, like }
+    }
+    
 }
 
 const deleteLike = async (postId, userId) => {
@@ -60,7 +83,7 @@ const fetchLike = async (likeId) => {
 
 module.exports = {
     fetchLikes,
-    createLike,
+    toggleLike,
     deleteLike,
     fetchLike
 }
