@@ -160,6 +160,7 @@ const Home = () => {
       {clovers.map((clover, index) => (
         <Clover
           key={clover.id}
+          id={clover.id}
           username={clover.author.username}
           posted={formatDate(clover.createdAt)}
           content={clover.content}

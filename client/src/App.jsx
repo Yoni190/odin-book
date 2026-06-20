@@ -11,6 +11,7 @@ import PublicRoute from './components/PublicRoute'
 import Header from './components/Header'
 import MainLayout from './components/MainLayout'
 import Profile from './pages/Profile'
+import CloverDetails from './pages/CloverDetails'
 
 
 
@@ -33,6 +34,7 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path='/home' element={<Home />} />
             <Route path='/profile' element={<Profile />} />
+            <Route path='/clover/:id' element={<CloverDetails />} />
           </Route>
         </Route>
       </Routes>

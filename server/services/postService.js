@@ -34,7 +34,13 @@ const fetchPost = async (id) => {
                 select: {
                     username: true
                 }
-            }
+            },
+            _count: {
+                select: {
+                    likes: true
+                }
+            },
+            likes: true
         }
     })
 

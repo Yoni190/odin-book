@@ -1,8 +1,9 @@
 import { Heart, MessageSquare } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router'
 
 
-const Clover = ({ username, posted, content, likesCount, likes, comments, likePost, unlikePost, userId}) => {
+const Clover = ({ id, username, posted, content, likesCount, likes, comments, likePost, unlikePost, userId}) => {
 
   const [liked, setLiked] = useState(false)
 
@@ -31,10 +32,10 @@ const Clover = ({ username, posted, content, likesCount, likes, comments, likePo
                 <p>{likesCount}</p>
             </div>
 
-            <div className='flex gap-1 hover:text-blue-400 transition duration-300 hover:scale-[1.05] cursor-pointer'>
+            <Link to={`/clover/${id}`} className='flex gap-1 hover:text-blue-400 transition duration-300 hover:scale-[1.05] cursor-pointer'>
                 <MessageSquare />
                 <p>{comments}</p>
-            </div>
+            </Link>
             </div>
         </div>
 
