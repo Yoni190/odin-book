@@ -93,10 +93,12 @@ const Profile = () => {
                 {posts.map((post, index) => (
                     <Clover
                     key={post.id}
+                    id={post.id}
                     username={post.author.username}
                     posted={formatDate(post.createdAt)}
                     content={post.content}
-                    likes={post._count.likes}
+                    likesCount={post._count.likes}
+                    likes={post.likes}
                     comments={post._count.comments} />
                 ))}
             </>
