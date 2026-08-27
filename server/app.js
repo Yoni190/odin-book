@@ -19,6 +19,21 @@ app.use(express.json())
 app.use(cors())
 app.use(cookieParser())
 
+app.use((err, req, res, next) => {
+  let statusCode = err.status || 500
+  let message = err.message || 'Internal Server Error'
+
+  if(err.name == 'ValidationError') {
+    statusCode = 400
+    message = 'Invalid Data Provided'
+  }
+
+  res.status(statusCode).json({
+    success: false,
+    error: message
+  })
+})
+
 app.use('/api/auth', routes.authRoute)
 app.use('/api/posts', routes.postRoute)
 app.use('/api/posts', routes.likeRoute)
