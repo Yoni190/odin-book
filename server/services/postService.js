@@ -40,7 +40,16 @@ const fetchPost = async (id) => {
                     likes: true
                 }
             },
-            likes: true
+            likes: true,
+            comments: {
+                include: {
+                    user: {
+                        select: {
+                            username: true
+                        }
+                    }
+                }
+            }
         }
     })
 
