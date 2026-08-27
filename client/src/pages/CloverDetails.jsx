@@ -115,7 +115,7 @@ const CloverDetails = ({ userId }) => {
           
           <div className="flex gap-4 mt-2">
             {/* Like Button */}
-            <div 
+            <button 
               onClick={handleLikeToggle}
               className='flex gap-1 items-center hover:text-red-500 transition duration-300 hover:scale-[1.05] cursor-pointer text-zinc-500'
             >
@@ -125,7 +125,7 @@ const CloverDetails = ({ userId }) => {
                 className={liked ? 'text-red-500' : ''}
               />
               <p className={liked ? 'text-red-500 font-medium' : ''}>{likesCount}</p>
-            </div>
+            </button>
 
             {/* Comments Counter Display */}
             <div className='flex gap-1 items-center text-zinc-500'>
