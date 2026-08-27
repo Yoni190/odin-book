@@ -33,7 +33,8 @@ const post = async (req, res) => {
 
         return res.json({ post })
     } catch (error) {
-        return res.status(500).json({ error: 'Something went wrong' })
+        console.error('Error fetching post:', error);
+        return res.status(500).json({ error: 'Internal server error' });
     }
 }
 
