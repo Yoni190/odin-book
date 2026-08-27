@@ -23,7 +23,7 @@ app.use('/api/auth', routes.authRoute)
 app.use('/api/posts', routes.postRoute)
 app.use('/api/posts', routes.likeRoute)
 app.use('/api/posts', routes.commentRoute)
-app.use('/api/comments', routes.commentRoute)
+// app.use('/api/comments', routes.commentRoute)
 
 app.use('/api/profile', routes.profileRoute)
 app.use('/api/follows', routes.followRoute)
