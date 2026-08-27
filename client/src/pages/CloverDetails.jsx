@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router';
 import { Heart, MessageSquare, ArrowLeft } from 'lucide-react';
 import axios from 'axios';
+import Comment from '../components/Comment';
+import formatDate from '../helpers/formatDate';
 
 const CloverDetails = ({ userId }) => {
   const { id } = useParams();
@@ -10,6 +12,7 @@ const CloverDetails = ({ userId }) => {
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
   const [user, setUser] = useState({})
+  const [comments, setComments] = useState([])
 
   const API_URL = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem('token');
@@ -25,8 +28,9 @@ const CloverDetails = ({ userId }) => {
         const data = response.data.post;
         setClover(data);
         setLikesCount(data._count?.likes || 0);
+        setComments(data.comments)
         
-        console.log(data.likes)
+        console.log(data)
         // Match user ID structure correctly (checking if userId directly matches or matches a nested object property)
         const userHasLiked = data.likes?.some(like => 
           like.userId === user.id
@@ -103,7 +107,7 @@ const CloverDetails = ({ userId }) => {
       <div className='p-4 border border-zinc-200 rounded-xl shadow-sm bg-zinc-50/50'>
         {/* Mirroring your Feed design header structure */}
         <h2 className='text-zinc-600 font-semibold mb-3'>
-          @{clover.author?.username || clover.username} • <span className='text-sm text-zinc-400 font-normal'>{clover.posted || 'Just now'}</span>
+          @{clover.author?.username || clover.username} • <span className='text-sm text-zinc-400 font-normal'>{formatDate(clover.createdAt)}</span>
         </h2>
         
         <div className='flex flex-col gap-4'>
@@ -135,7 +139,20 @@ const CloverDetails = ({ userId }) => {
       {/* Comments Target Block */}
       <div className="mt-8">
         <h3 className="text-xl font-bold text-zinc-800 border-b pb-2 mb-4">Comments</h3>
-        <p className="text-sm text-zinc-400 italic">No comments yet. Be the first to clover back!</p>
+        {comments.length == 0 ? (
+          <p className="text-sm text-zinc-400 italic">No comments yet. Be the first to clover back!</p>
+        ) : (
+          <>
+            {comments.map((comment, index) => (
+              <Comment
+                key={index}
+                content={comment.content}
+                username={comment.user.username}
+                createdAt={comment.createdAt}
+              />
+            ))}
+          </>
+        )}
       </div>
     </div>
   );
