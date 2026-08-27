@@ -50,6 +50,7 @@ const validateRegister = [
             if(value !== req.body.password) {
                 throw new Error('Confirm password must be same as password.')
             }
+            return true
         })
 ]
 
