@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router';
-import { Heart, MessageSquare, ArrowLeft } from 'lucide-react';
+import { Heart, MessageSquare, ArrowLeft, SendHorizonal } from 'lucide-react';
 import axios from 'axios';
 import Comment from '../components/Comment';
 import formatDate from '../helpers/formatDate';
@@ -13,6 +13,8 @@ const CloverDetails = ({ userId }) => {
   const [likesCount, setLikesCount] = useState(0);
   const [user, setUser] = useState({})
   const [comments, setComments] = useState([])
+  const [showForm, setShowForm] = useState(false)
+  const [comment, setComment] = useState('')
 
   const API_URL = import.meta.env.VITE_API_URL;
   const token = localStorage.getItem('token');
@@ -91,6 +93,25 @@ const CloverDetails = ({ userId }) => {
     }
   };
 
+  const toggleCommentForm = () => {
+    setShowForm(!showForm)
+  }
+
+  const handleComment = async () => {
+    try {
+      const res = await axios.post(`${API_URL}/posts/${id}/comments`, {
+        content: comment
+      },
+    {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    } catch (error) {
+      console.error(error.response.data)
+    }
+  }
+
   if (loading) return <div className="p-6 text-gray-500">Loading clover details...</div>;
   if (!clover) return <div className="p-6 text-red-500">Clover not found.</div>;
 
@@ -128,13 +149,45 @@ const CloverDetails = ({ userId }) => {
             </button>
 
             {/* Comments Counter Display */}
-            <div className='flex gap-1 items-center text-zinc-500'>
+            <button 
+              onClick={toggleCommentForm}
+              className='flex gap-1 items-center text-zinc-500 cursor-pointer'
+            >
               <MessageSquare size={20} />
               <p>{clover.comments?.length || clover._count?.comments || 0}</p>
-            </div>
+            </button>
           </div>
         </div>
       </div>
+
+      {showForm && (
+        <form 
+          onSubmit={handleComment} 
+          className="mt-4 flex flex-col sm:flex-row gap-2"
+        >
+          <textarea
+            rows={3}
+            name="comment"
+            id="comment"
+            placeholder="Write a comment…"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            className="flex-1 rounded-lg border border-gray-300 px-4 py-2.5 text-sm 
+                      focus:border-blue-500 focus:ring-2 focus:ring-blue-200 
+                      outline-none transition resize-none"
+          />
+          <button
+            type="submit"
+            className="rounded-lg bg-red-600 px-6 py-2.5 text-sm font-medium 
+                      text-white hover:bg-red-700 focus:ring-2 focus:ring-red-300 
+                      transition disabled:opacity-50"
+            disabled={!comment.trim()}
+          >
+            <SendHorizonal />
+          </button>
+        </form>
+      )}
+      
 
       {/* Comments Target Block */}
       <div className="mt-8">
