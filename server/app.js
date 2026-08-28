@@ -35,6 +35,7 @@ app.use((err, req, res, next) => {
 })
 
 app.use('/api/auth', routes.authRoute)
+app.use('/api/users', routes.userRoute)
 app.use('/api/posts', routes.postRoute)
 app.use('/api/posts', routes.likeRoute)
 app.use('/api/posts', routes.commentRoute)
