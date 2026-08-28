@@ -3,11 +3,22 @@ const { prisma } = require("../lib/prisma");
 
 
 const fetchUserFollows = async (userId) => {
-    const follows = await prisma.follow.count({
+    const follows = await prisma.follow.findMany({
+        where: { followingId: userId },
+        include: {
+            follower: {
+                select: {
+                    id: true,
+                    username: true
+                }
+            }
+        }
+    })
+    const followCount = await prisma.follow.count({
         where: { followingId: userId }
     })
 
-    return follows
+    return {follows, followCount}
 }
 
 const createFollow = async (followerId, followingId) => {
