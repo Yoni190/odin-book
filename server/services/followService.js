@@ -1,6 +1,6 @@
 const { NotFoundError } = require("../lib/errors");
 const { prisma } = require("../lib/prisma");
-
+const { AppError } = require('../utils/errors')
 
 const fetchUserFollows = async (userId) => {
     const follows = await prisma.follow.findMany({
@@ -53,8 +53,35 @@ const deleteFollow = async (followerId, followingId) => {
     })
 }
 
+const updateFollowRequest = async(id, userId, status) => {
+    const follow = await prisma.follow.findUnique({
+        where: { id }
+    })
+
+    if(!follow) {
+        throw new AppError('Follow request not found', 404)
+    }
+    
+    if(follow.followingId !== userId) {
+        throw new AppError('You are not authorized to act on this request', 403)
+    }
+
+    if (follow.status !== 'PENDING') {
+        throw new AppError('Follow request already processes', 400)
+    }
+
+    const updated = await prisma.follow.update({
+        where: { id },
+        data: { status },
+    });
+
+    return updated
+}
+
+
 module.exports = {
     fetchUserFollows,
     createFollow,
-    deleteFollow
+    deleteFollow,
+    updateFollowRequest
 }
