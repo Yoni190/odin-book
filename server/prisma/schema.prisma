@@ -81,4 +81,5 @@ model Follow {
 enum FollowStatus {
   PENDING
   ACCEPTED
+  REJECTED
 }
