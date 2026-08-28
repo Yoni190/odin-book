@@ -29,6 +29,19 @@ const Sidebar = () => {
 
       getUsers()
     }, [])
+
+    const handleFollow = async (id) => {
+        console.log('followed', id)
+        try {
+            const res = await axios.post(`${API_URL}/follows/${id}`, null, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
+
+            console.log(res)
+        } catch (error) {
+            console.error(error)
+        }
+    }
     
   return (
     <div className="min-h-screen bg-gray-50 p-6 md:p-8">
@@ -65,6 +78,10 @@ const Sidebar = () => {
                     <span className="truncate font-medium text-gray-900">
                         {user.username}
                     </span>
+
+                    <button onClick={() => handleFollow(user.id)}>
+                        Follow
+                    </button>
                     </div>
                 </li>
                 ))}
