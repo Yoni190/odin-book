@@ -12,6 +12,7 @@ import Header from './components/Header'
 import MainLayout from './components/MainLayout'
 import Profile from './pages/Profile'
 import CloverDetails from './pages/CloverDetails'
+import FollowRequests from './pages/FollowRequests'
 
 
 
@@ -35,6 +36,7 @@ function App() {
             <Route path='/home' element={<Home />} />
             <Route path='/profile' element={<Profile />} />
             <Route path='/clover/:id' element={<CloverDetails />} />
+            <Route path='/follow-requests' element={<FollowRequests />} />
           </Route>
         </Route>
       </Routes>

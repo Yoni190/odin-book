@@ -18,6 +18,9 @@ const Header = () => {
         <Link to={'/home'}><h1 className='text-4xl font-semibold'>Clover</h1></Link>
 
         <div className='flex items-center gap-5'>
+            <Link to={'/follow-requests'}>
+                <p>Follow Requests</p>
+            </Link>
             <Link to={'/profile'}>
                 <CircleUserRound
                     size={36}
