@@ -4,7 +4,6 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import formatDate from '../helpers/formatDate'
 
-
 const FollowRequests = () => {
     const [follows, setFollows] = useState([])
     const [loading, setLoading] = useState(true);
@@ -26,6 +25,18 @@ const FollowRequests = () => {
 
       fetchFollowRequests()
     }, [])
+
+    const handleAccept = async (id) => {
+        try {
+            const res = await apiClient.patch(`/follows/${id}`, {
+                status: 'ACCEPTED'
+            })
+
+            console.log(res)
+        } catch (error) {
+            console.error(error)
+        }
+    }
     
     if (loading) {
         return (
