@@ -2,7 +2,7 @@ import axios from 'axios'
 import { format, formatDistanceToNow } from 'date-fns'
 import React, { useEffect, useState } from 'react'
 import Clover from '../components/Clover'
-
+import { Link } from 'react-router'
 
 
 
@@ -84,7 +84,9 @@ const Profile = () => {
                     
 
                     <div className='flex gap-3'>
-                        <h3>Followers {user._count?.followers}</h3>
+                        <Link to={'/followers'}>
+                            <h3>Followers {user._count?.followers}</h3>
+                        </Link>
                         <h3>Followings {user._count?.followings}</h3>
                     </div>
                 </div>
