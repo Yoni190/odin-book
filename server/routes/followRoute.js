@@ -7,6 +7,7 @@ const { authenticate } = require('../middleware/authenticate')
 const router = Router()
 
 router.get('/me/followers', authenticate, followController.followers)
+router.get('/me/followings', authenticate, followController.followings)
 router.get('/requests', authenticate, followController.requests)
 router.get('/:id', authenticate, followController.getUserFollowers)
 router.post('/:id', authenticate, followController.store)

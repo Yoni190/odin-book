@@ -1,5 +1,5 @@
 const { NotFoundError } = require("../lib/errors")
-const { fetchUserFollowRequests, createFollow, deleteFollow, updateFollowRequest, fetchUserFollowers } = require("../services/followService")
+const { fetchUserFollowRequests, createFollow, deleteFollow, updateFollowRequest, fetchUserFollowers, fetchUserFollowings } = require("../services/followService")
 const { AppError } = require('../utils/errors')
 
 const requests = async (req, res) => {
@@ -22,6 +22,22 @@ const followers = async (req, res) => {
     } catch (error) {
         console.error(error);
         
+        const statusCode = error instanceof AppError ? error.statusCode : 500
+        const message = error instanceof AppError ? error.message : 'Internal server error'
+
+        return res.status(statusCode).json({ error: message })
+    }
+}
+
+const followings = async (req, res) => {
+    const userId = req.user.id
+    try {
+        const followings = await fetchUserFollowings(userId)
+
+        return res.json(followings)
+    } catch (error) {
+        console.error(error)
+
         const statusCode = error instanceof AppError ? error.statusCode : 500
         const message = error instanceof AppError ? error.message : 'Internal server error'
 
@@ -110,5 +126,6 @@ module.exports = {
     destroy,
     getUserFollowers,
     update,
-    followers
+    followers,
+    followings
 }

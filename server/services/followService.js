@@ -6,7 +6,7 @@ const fetchUserFollowers = async(userId) => {
     const followers = await prisma.follow.findMany({
         where: { followingId: userId, status: 'ACCEPTED' },
         include: {
-            follower: {
+            following: {
                 select: {
                     id: true,
                     username: true
@@ -20,6 +20,26 @@ const fetchUserFollowers = async(userId) => {
     }
 
     return followers
+}
+
+const fetchUserFollowings = async (userId) => {
+    const followings = await prisma.follow.findMany({
+        where: { followerId: userId },
+        include: {
+            follower: {
+                select: {
+                    id: true,
+                    username: true
+                }
+            }
+        }
+    })
+
+    if(!followings) {
+        throw new AppError('Follow request not found', 404)
+    }
+
+    return followings
 }
 
 const fetchUserFollowRequests = async (userId) => {
@@ -104,5 +124,6 @@ module.exports = {
     createFollow,
     deleteFollow,
     updateFollowRequest,
-    fetchUserFollowers
+    fetchUserFollowers,
+    fetchUserFollowings
 }
