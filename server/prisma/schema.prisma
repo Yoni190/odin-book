@@ -65,8 +65,8 @@ model Comment {
 
 model Follow {
   id          Int          @id @default(autoincrement())
-  follower    User         @relation("Followers", fields: [followerId], references: [id], onDelete: Cascade)
-  following   User         @relation("Followings", fields: [followingId], references: [id], onDelete: Cascade)
+  follower    User         @relation("Followers", fields: [followingId], references: [id], onDelete: Cascade)
+  following   User         @relation("Followings", fields: [followerId], references: [id], onDelete: Cascade)
   followerId  Int
   followingId Int
   status      FollowStatus @default(PENDING)
