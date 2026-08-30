@@ -2,6 +2,26 @@ const { NotFoundError } = require("../lib/errors");
 const { prisma } = require("../lib/prisma");
 const { AppError } = require('../utils/errors')
 
+const fetchUserFollowers = async(userId) => {
+    const followers = await prisma.follow.findMany({
+        where: { followingId: userId, status: 'ACCEPTED' },
+        include: {
+            follower: {
+                select: {
+                    id: true,
+                    username: true
+                }
+            }
+        }
+    })
+
+    if(!followers) {
+        throw new AppError('Follow request not found', 404)
+    }
+
+    return followers
+}
+
 const fetchUserFollowRequests = async (userId) => {
     const follows = await prisma.follow.findMany({
         where: { followingId: userId },
@@ -83,5 +103,6 @@ module.exports = {
     fetchUserFollowRequests,
     createFollow,
     deleteFollow,
-    updateFollowRequest
+    updateFollowRequest,
+    fetchUserFollowers
 }
