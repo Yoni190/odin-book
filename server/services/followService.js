@@ -2,7 +2,7 @@ const { NotFoundError } = require("../lib/errors");
 const { prisma } = require("../lib/prisma");
 const { AppError } = require('../utils/errors')
 
-const fetchUserFollows = async (userId) => {
+const fetchUserFollowRequests = async (userId) => {
     const follows = await prisma.follow.findMany({
         where: { followingId: userId },
         include: {
@@ -80,7 +80,7 @@ const updateFollowRequest = async(id, userId, status) => {
 
 
 module.exports = {
-    fetchUserFollows,
+    fetchUserFollowRequests,
     createFollow,
     deleteFollow,
     updateFollowRequest

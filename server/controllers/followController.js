@@ -1,11 +1,11 @@
 const { NotFoundError } = require("../lib/errors")
-const { fetchUserFollows, createFollow, deleteFollow, updateFollowRequest } = require("../services/followService")
+const { fetchUserFollowRequests, createFollow, deleteFollow, updateFollowRequest } = require("../services/followService")
 const { AppError } = require('../utils/errors')
 
-const index = async (req, res) => {
+const requests = async (req, res) => {
     const userId = req.user.id
     try {
-        const follows = await fetchUserFollows(userId)
+        const follows = await fetchUserFollowRequests(userId)
 
         return res.json(follows)
     } catch (error) {
@@ -89,7 +89,7 @@ const update = async (req, res) => {
 }
 
 module.exports = {
-    index,
+    requests,
     store,
     destroy,
     getUserFollowers,
