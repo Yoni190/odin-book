@@ -26,14 +26,24 @@ const FollowRequests = () => {
       fetchFollowRequests()
     }, [])
 
-    const handleAccept = async (id) => {
+    const handleStatusUpdate = async (id, newStatus) => {
+        setFollows(prev =>
+            prev.map(follow =>
+                follow.id === id ? { ...follow, status: newStatus } : follow
+            )
+        )
         try {
             const res = await apiClient.patch(`/follows/${id}`, {
-                status: 'ACCEPTED'
+                status: newStatus
             })
 
-            console.log(res)
+            console.log(res.data.follow)
         } catch (error) {
+            setFollows(prev =>
+                prev.map(follow =>
+                    follow.id === id ? { ...follow, status: 'PENDING' } : follow
+                )
+            )
             console.error(error)
         }
     }
@@ -96,18 +106,23 @@ const FollowRequests = () => {
                     </div>
 
                     <div className="flex shrink-0 gap-2 self-end sm:self-auto">
-                    <button
-                        onClick={() => handleAccept(follow.id)}
-                        className="rounded-lg bg-red-600 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                    >
-                        Accept
-                    </button>
-                    <button
-                        onClick={() => handleReject(follow.id)}
-                        className="rounded-lg bg-gray-100 px-4 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
-                    >
-                        Reject
-                    </button>
+                    {follow.status == 'PENDING' && (
+                        <>
+                            <button
+                                onClick={() => handleStatusUpdate(follow.id, 'ACCEPTED')}
+                                className="rounded-lg bg-red-600 px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                            >
+                                Accept
+                            </button>
+                            <button
+                                onClick={() => handleStatusUpdate(follow.id, 'REJECTED')}
+                                className="rounded-lg bg-gray-100 px-4 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+                            >
+                                Reject
+                            </button>
+                        </>
+                    )}
+                    
                     </div>
                 </li>
                 );
