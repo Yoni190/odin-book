@@ -17,7 +17,11 @@ const fetchUserInfo = async (userId) => {
 
             _count: {
                 select: {
-                    followers: true,
+                    followers: {
+                        where: {
+                            status: 'ACCEPTED'
+                        }
+                    },
                     followings: true
                 }
             }
