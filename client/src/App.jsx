@@ -14,6 +14,7 @@ import Profile from './pages/Profile'
 import CloverDetails from './pages/CloverDetails'
 import FollowRequests from './pages/FollowRequests'
 import Followers from './pages/Followers'
+import Followings from './pages/Followings'
 
 
 
@@ -39,6 +40,7 @@ function App() {
             <Route path='/clover/:id' element={<CloverDetails />} />
             <Route path='/follow-requests' element={<FollowRequests />} />
             <Route path='/followers' element={<Followers />} />
+            <Route path='/followings' element={<Followings />} />
           </Route>
         </Route>
       </Routes>

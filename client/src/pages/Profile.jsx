@@ -87,7 +87,9 @@ const Profile = () => {
                         <Link to={'/followers'}>
                             <h3>Followers {user._count?.followers}</h3>
                         </Link>
-                        <h3>Followings {user._count?.followings}</h3>
+                        <Link to={'/followings'}>
+                            <h3>Followings {user._count?.followings}</h3>
+                        </Link>
                     </div>
                 </div>
 
