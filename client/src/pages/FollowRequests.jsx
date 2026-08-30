@@ -13,7 +13,7 @@ const FollowRequests = () => {
       const fetchFollowRequests = async () => {
         setLoading(true)
         try {
-            const res = await apiClient.get('/follows')
+            const res = await apiClient.get('/follows/requests')
             setFollows(res.data.follows || [])
         } catch (error) {
             setError('Failed to load follow requests');
