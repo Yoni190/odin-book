@@ -78,18 +78,23 @@ const Profile = () => {
                         </p>
                     </div>
 
-                    <h2>Bio</h2>
-                    <p>{user.bio ? user.bio : "You don't have a bio"}</p>
-
-                    
-
-                    <div className='flex gap-3'>
-                        <Link to={'/followers'}>
-                            <h3>Followers {user._count?.followers}</h3>
-                        </Link>
-                        <Link to={'/followings'}>
-                            <h3>Followings {user._count?.followings}</h3>
-                        </Link>
+                    <div className='flex justify-between'>
+                        <div>
+                            <h2>Bio</h2>
+                            <p>{user.bio ? user.bio : "You don't have a bio"}</p>
+                            
+                            <div className='flex gap-3'>
+                                <Link to={'/followers'}>
+                                    <h3>Followers {user._count?.followers}</h3>
+                                </Link>
+                                <Link to={'/followings'}>
+                                    <h3>Followings {user._count?.followings}</h3>
+                                </Link>
+                            </div>
+                        </div>
+                        <div>
+                            <Link to={'/edit-profile'}>Edit Profile</Link>
+                        </div>
                     </div>
                 </div>
 
