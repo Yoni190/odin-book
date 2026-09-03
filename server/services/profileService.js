@@ -32,8 +32,8 @@ const fetchUserInfo = async (userId) => {
 }
 
 const editUserInfo = async (userId, username, email, fName, lName) => {
-    const user = await prisma.user.findUnique({
-        where: { username }
+    const user = await prisma.user.findFirst({
+        where: { username, id: { not: userId } },
     })
 
     if(user) throw new InvalidDataError('Username already taken')
