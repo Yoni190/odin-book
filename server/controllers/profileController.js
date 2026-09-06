@@ -1,3 +1,4 @@
+const { createClient } = require("@supabase/supabase-js/dist/index.cjs")
 const { InvalidDataError } = require("../lib/errors")
 const { fetchUserInfo, editUserInfo } = require("../services/profileService")
 
@@ -42,8 +43,29 @@ const getUserInfo = async (req, res) => {
     }
 }
 
+const profileUrl = async (req, res) => {
+    const fileName = `${Date.now()}_${crypto.randomUUID()}.jpg`
+    const filePath = `profile-pics/${fileName}`
+    const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY)
+
+    if(!filePath) {
+        return res.status(400).json({ error: 'Path parameter is required' })
+    }
+
+    const { data, error } = await supabase.storage
+        .from('odin-book')
+        .createSignedUploadUrl(filePath, 60)
+
+    if (error) {
+        return res.status(500).json({ error: error })
+    }
+
+    return res.json({ signedUrl: data.signedUrl })
+}
+
 module.exports = {
     index,
     update,
-    getUserInfo
+    getUserInfo,
+    profileUrl
 }
