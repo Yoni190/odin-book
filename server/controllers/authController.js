@@ -36,7 +36,13 @@ const register = async (req, res) => {
     }
     
     try {
-        await createUser(req.body)
+        const { profilePicKey, ...userData } = req.body;
+        const userWithAvatar = {
+            ...userData,
+            avatar: profilePicKey || null,
+        };
+
+        await createUser(userWithAvatar)
 
         return res.json({ message: 'User created successfully!' })
     } catch (error) {
