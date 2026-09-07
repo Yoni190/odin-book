@@ -6,7 +6,7 @@ const { authenticate } = require('../middleware/authenticate')
 const router = Router()
 
 router.get('/', authenticate, profileController.index)
-router.get('/upload-url', authenticate, profileController.profileUrl)
+router.get('/upload-url', profileController.profileUrl)
 router.get('/:id', authenticate, profileController.getUserInfo)
 router.put('/', authenticate, profileController.update)
 
